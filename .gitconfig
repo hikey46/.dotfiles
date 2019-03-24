@@ -1,0 +1,39 @@
+[user]
+  name = Hiromu Kihira
+  email = kihira@r-unit.co.jp
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+
+[push]
+  default = simple
+
+[credential]
+  helper = cache --timeout=3600
+
+[http]
+  sslVerify = true
+
+[core]
+  editor = vim
+        autocrlf = input
+
+[alias]
+  co = checkout
+  st = status
+  ci = commit
+  lg = log --oneline --graph --date=iso --pretty='%C(blue)%an %C(yellow)%h %Creset %C(cyan bold)%d %C(bold green)[%cd] %C(bold green)(%ar) \n\t ⇒ %Creset %s %Creset' --decorate --all --stat
+[push]
+  default = current
+
+[fetch]
+  prune = true
+
+[merge]
+        ff = false
+        ff = false
+[pull]
+        ff = only
+        ff = only
