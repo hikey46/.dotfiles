@@ -24,6 +24,8 @@ export ZPLUG_HOME=/usr/local/opt/zplug
 # For compilers to find mysql@5.7 you may need to set
 export LDFLAGS="-L/usr/local/opt/mysql@5.7/lib"
 export CPPFLAGS="-I/usr/local/opt/mysql@5.7/include"
+export PATH=/usr/local/opt/mysql@5.7/bin:${PATH}
+export DYLD_LIBRARY_PATH=/usr/local/opt/mysql@5.7/:${DYLD_LIBRARY_PATH}
 
 #############
 ### zplug ###
