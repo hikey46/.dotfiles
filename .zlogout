@@ -1,0 +1,1 @@
+/Users/hiromu/.dotfiles/.zprezto/runcoms/zlogout

@@ -28,7 +28,16 @@ export ZPLUG_HOME=/usr/local/opt/zplug
 
 source $ZPLUG_HOME/init.zsh
 
+zplug "mollifier/anyframe"
+zplug "mollifier/cd-gitroot"
+zplug "b4b4r07/enhancd", use:enhancd.sh
+zplug "junegunn/fzf", as:command, use:bin/fzf-tmux
+zplug "junegunn/fzf-bin", as:command, from:gh-r, rename-to:fzf
+zplug "stedolan/jq", from:gh-r, as:command
 zplug "sorin-ionescu/prezto"
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-syntax-highlighting"
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -39,6 +48,27 @@ if ! zplug check --verbose; then
 fi
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
+
+##############
+### prezto ###
+##############
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+############
+### peco ###
+############
+
+function peco-history-selection() {
+    BUFFER=$(history 1 | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\*?\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --query "$LBUFFER")
+    CURSOR=${#BUFFER}
+    zle reset-prompt
+}
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
 
 ###############
 ### aliases ###
