@@ -29,16 +29,7 @@ export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "mollifier/anyframe"
-zplug "mollifier/cd-gitroot"
-zplug "b4b4r07/enhancd", use:enhancd.sh
-zplug "junegunn/fzf", as:command, use:bin/fzf-tmux
-zplug "junegunn/fzf-bin", as:command, from:gh-r, rename-to:fzf
-zplug "stedolan/jq", from:gh-r, as:command
 zplug "sorin-ionescu/prezto"
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-syntax-highlighting"
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
