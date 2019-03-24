@@ -32,7 +32,7 @@ formulas=(
     rbenv
     ruby-build
     lua
-    mysql
+    mysql@5.7
     postgresql
     sqlite
     ricty

@@ -21,6 +21,9 @@ export PGDATA='/usr/local/var/postgres'
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export RAILS_ENV=development
 export ZPLUG_HOME=/usr/local/opt/zplug
+# For compilers to find mysql@5.7 you may need to set
+export LDFLAGS="-L/usr/local/opt/mysql@5.7/lib"
+export CPPFLAGS="-I/usr/local/opt/mysql@5.7/include"
 
 #############
 ### zplug ###
@@ -29,7 +32,44 @@ export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "sorin-ionescu/prezto"
+# theme (https://github.com/sindresorhus/pure#zplug)
+zplug "mafredri/zsh-async"
+zplug "sindresorhus/pure"
+# peco/fzf/percol/zaw などのラッパー関数を提供する。pecoとzshの連携のために
+zplug "mollifier/anyframe"
+# gitルートへcd
+zplug "mollifier/cd-gitroot"
+# jsonを扱うために
+zplug "stedolan/jq", from:gh-r, as:command
+# 移動強化
+zplug "b4b4r07/enhancd", use:enhancd.sh
+zplug "junegunn/fzf-bin", as:command, from:gh-r, rename-to:fzf
+zplug "junegunn/fzf", as:command, use:bin/fzf-tmux
+zplug "peco/peco", as:command, from:gh-r
+zplug "b4b4r07/dotfiles", as:command, use:bin/peco-tmux
+zplug "b4b4r07/zsh-gomi", as:command, use:bin
+# 構文のハイライト(https://github.com/zsh-users/zsh-syntax-highlighting)
+zplug "zsh-users/zsh-syntax-highlighting"
+# history関係
+zplug "zsh-users/zsh-history-substring-search"
+# タイプ補完
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "chrissicool/zsh-256color"
+
+zplug "supercrabtree/k"
+
+zplug "paulirish/git-open", as:plugin
+
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+: "cd先のディレクトリのファイル一覧を表示する" && {
+  [ -z "$ENHANCD_ROOT" ] && function chpwd { tree -L 1 } # enhancdがない場合
+  [ -z "$ENHANCD_ROOT" ] || export ENHANCD_HOOK_AFTER_CD="tree -L 1" # enhancdがあるときはそのHook機構を使う
+}
+
+: "sshコマンド補完を~/.ssh/configから行う" && {
+  function _ssh { compadd $(fgrep 'Host ' ~/.ssh/*/config | grep -v '*' |  awk '{print $2}' | sort) }
+}
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -40,15 +80,6 @@ if ! zplug check --verbose; then
 fi
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
-
-##############
-### prezto ###
-##############
-
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
 
 ############
 ### peco ###
@@ -74,4 +105,4 @@ alias mv='mv -i'
 #alias vi='nvim'
 alias cat='cat -n'
 alias less='less -NM'
-alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=aunpack
+alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=aunpackexport PATH="/usr/local/opt/mysql@5.7/bin:$PATH"

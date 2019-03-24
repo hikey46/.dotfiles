@@ -1,1 +1,0 @@
-/Users/hiromu/.dotfiles/.zprezto/runcoms/zlogin
