@@ -21,6 +21,7 @@ formulas=(
     openssl
     telnet
     cmake
+    gmp
     z
     colordiff
     zsh
@@ -34,13 +35,14 @@ formulas=(
     rbenv
     ruby-build
     lua
+    redis
     mysql@5.7
     postgresql
     sqlite
     ricty
-    sqlite
     ssh-copy-id
     diff-so-fancy
+    ImageMagick
 )
 
 "brew tap..."
@@ -58,6 +60,7 @@ done
 
 casks=(
     google-chrome
+    chromedriver
     firefox
     google-drive-file-stream
     visual-studio-code
