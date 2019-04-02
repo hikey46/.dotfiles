@@ -43,6 +43,7 @@ formulas=(
     ssh-copy-id
     diff-so-fancy
     ImageMagick
+    ffmpeg
 )
 
 "brew tap..."
