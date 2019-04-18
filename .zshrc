@@ -8,6 +8,7 @@
 PATH=$PATH:$HOME/bin
 
 eval "$(rbenv init - zsh)"
+eval "$(ndenv init - zsh)"
 
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -16,6 +17,7 @@ export LANG=en_US.UTF-8
 export CLICOLOR=1
 export LSCOLORS=DxGxcxdxCxegedabagacad
 export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.ndenv/bin:$PATH"
 export XDG_CONFIG_HOME=$HOME/.config
 export PGDATA='/usr/local/var/postgres'
 export PATH="/usr/local/opt/openssl/bin:$PATH"

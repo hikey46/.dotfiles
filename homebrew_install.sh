@@ -29,7 +29,8 @@ formulas=(
     peco
     ansible
     hub
-    node
+    ndenv
+    yarn
     python3
     rbenv
     ruby-build
