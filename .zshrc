@@ -219,6 +219,27 @@ function peco-history-selection() {
 zle -N peco-history-selection
 bindkey '^R' peco-history-selection
 
+autoload -U compinit && compinit
+
+function print_known_hosts (){ 
+    if [ -f $HOME/.ssh/known_hosts ]; then
+        cat $HOME/.ssh/known_hosts | tr ',' ' ' | cut -d' ' -f1 
+    fi
+}
+
+########################
+### sshのhostname補完 ###
+########################
+
+autoload -U compinit && compinit
+
+function print_known_hosts (){ 
+    if [ -f $HOME/.ssh/known_hosts ]; then
+        cat $HOME/.ssh/known_hosts | tr ',' ' ' | cut -d' ' -f1 
+    fi
+}
+_cache_hosts=($( print_known_hosts ))
+
 ###############
 ### aliases ###
 ###############
