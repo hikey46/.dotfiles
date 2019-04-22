@@ -67,6 +67,8 @@ zplug load --verbose
 setopt always_last_prompt    
 # 入力したコマンドが存在せず、かつディレクトリ名と一致するなら、ディレクトリに cd する
 setopt auto_cd
+# 補完候補を一覧表示にする
+setopt auto_list
 # 補完キー連打で順に補完候補を自動で補完
 setopt auto_menu             
 # カッコの対応などを自動的に補完
@@ -102,6 +104,8 @@ setopt hist_verify
 setopt hist_reduce_blanks  
 # 古いコマンドと同じものは無視 
 setopt hist_save_no_dups
+# Ctrl-Dでシェルからログアウトしない
+setopt ignoreeof
 # 履歴をインクリメンタルに追加
 setopt inc_append_history
 # コマンドラインでも # 以降をコメントと見なす
@@ -112,6 +116,10 @@ setopt list_types
 setopt magic_equal_subst     
 # ファイル名の展開でディレクトリにマッチした場合 末尾に / を付加
 setopt mark_dirs             
+# ビープを鳴らさない
+setopt nobeep 
+# バックグラウンドジョブが終了したらすぐに知らせる。
+setopt no_tify 
 #日本語ファイル名等8ビットを通す
 setopt print_eight_bit  
 # pushd したとき、ディレクトリがすでにスタックに含まれていればスタックに追加しない
@@ -394,6 +402,21 @@ autoload -Uz select-word-style
 select-word-style default
 zstyle ':zle:*' word-chars "_-./;@"
 zstyle ':zle:*' word-style unspecified
+
+######################
+### other function ###
+######################
+
+# Ctrl-Wでパスの文字列などをスラッシュ単位でdeleteできる
+autoload -U select-word-style
+select-word-style bash
+
+# Ctrl-[で直前コマンドの単語を挿入できる
+# see http://qiita.com/mollifier/items/1a9126b2200bcbaf515f
+autoload -Uz smart-insert-last-word
+zstyle :insert-last-word match '*([[:alpha:]/\\]?|?[[:alpha:]/\\])*' # [a-zA-Z], /, \ のうち少なくとも1文字を含む長さ2以上の単語
+zle -N insert-last-word smart-insert-last-word
+bindkey '^[' insert-last-word
 
 ###############
 ### aliases ###

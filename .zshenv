@@ -53,3 +53,5 @@ path=(
     ~/bin
     $path
 )
+
+cdpath={.. ~ ~/RubymineProjects}
