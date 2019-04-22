@@ -21,8 +21,6 @@ zplug "mollifier/cd-gitroot"
 zplug "stedolan/jq", from:gh-r, as:command
 # 移動強化
 zplug "b4b4r07/enhancd", use:enhancd.sh
-zplug "junegunn/fzf-bin", as:command, from:gh-r, rename-to:fzf
-zplug "junegunn/fzf", as:command, use:bin/fzf-tmux
 zplug "peco/peco", as:command, from:gh-r
 zplug "b4b4r07/dotfiles", as:command, use:bin/peco-tmux
 zplug "b4b4r07/zsh-gomi", as:command, use:bin
@@ -35,9 +33,11 @@ zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 zplug "chrissicool/zsh-256color"
 
-zplug "supercrabtree/k"
-
+zplug "peterhurford/git-aliases.zsh"
+zplug "motemen/ghq", as:command, from:gh-r
 zplug "paulirish/git-open", as:plugin
+
+zplug "supercrabtree/k"
 
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 : "cd先のディレクトリのファイル一覧を表示する" && {
