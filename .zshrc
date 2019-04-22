@@ -190,23 +190,22 @@ zstyle ':completion:*' group-name ''
 # セパレータを設定する
 zstyle ':completion:*' list-separator '-->'
 zstyle ':completion:*:manuals' separate-sections true
-
 # 変数の添字を補完する
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
-
 # apt-getとかdpkgコマンドをキャッシュを使って速くする
 zstyle ':completion:*' use-cache true
 
-# ディレクトリを切り替える時の色々な補完スタイル
-#あらかじめcdpathを適当に設定しておく
+## ディレクトリを切り替える時の色々な補完スタイル
+# あらかじめcdpathを適当に設定しておく
 cdpath=(~ ~/myapp/gae/ ~/myapp/gae/google_appengine/demos/)
 # カレントディレクトリに候補がない場合のみ cdpath 上のディレクトリを候補に出す
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 #cd は親ディレクトリからカレントディレクトリを選択しないので表示させないようにする (例: cd ../<TAB>):
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
-
 # オブジェクトファイルとか中間ファイルとかはfileとして補完させない
 zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
+# 今いるディレクトリを補完候補から外す
+zstyle ':completion:*' ignore-parents parent pwd ..
 
 ############
 ### peco ###
