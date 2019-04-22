@@ -56,6 +56,19 @@ if ! zplug check --verbose; then
   ¦ echo; zplug install
   fi
 fi
+
+###################
+### cdr command ###
+###################
+
+# cdrコマンドを有効 ログアウトしても有効なディレクトリ履歴
+# cdr タブでリストを表示
+autoload -Uz add-zsh-hook
+autoload -Uz chpwd_recent_dirs cdr
+add-zsh-hook chpwd chpwd_recent_dirs
+# cdrコマンドで履歴にないディレクトリにも移動可能に
+zstyle ":chpwd:*" recent-dirs-default true
+
 # Then, source plugins and add commands to $PATH
 zplug load --verbose
 
@@ -126,6 +139,8 @@ setopt print_eight_bit
 setopt pushd_ignore_dups
 # historyの共有
 setopt share_history
+# コマンド実行後は右プロンプトを消す
+setopt transient_rprompt  
 
 # cdを展開する前に補完候補を出させる(Ctrl-iで補完するようにする)
 bindkey "^I" menu-complete   
@@ -142,6 +157,9 @@ zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 ## 補完候補をオプションやディレクトリで分けて表示する
 zstyle ':completion:*' verbose yes
+## 補完候補をキャッシュする。
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
 zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
 zstyle ':completion:*:warnings' format '%F{RED}No matches for:''%F{YELLOW} %d'$DEFAULT
@@ -381,18 +399,6 @@ function _update_vcs_info_msg() {
     RPROMPT="$prompt"
 }
 add-zsh-hook precmd _update_vcs_info_msg
-
-###################
-### cdr command ###
-###################
-
-# cdrコマンドを有効 ログアウトしても有効なディレクトリ履歴
-# cdr タブでリストを表示
-autoload -Uz add-zsh-hook
-autoload -Uz chpwd_recent_dirs cdr
-add-zsh-hook chpwd chpwd_recent_dirs
-# cdrコマンドで履歴にないディレクトリにも移動可能に
-zstyle ":chpwd:*" recent-dirs-default true
 
 #####################
 ### 区切り文字の設定 ###
