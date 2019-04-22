@@ -122,16 +122,17 @@ setopt share_history
 # cdを展開する前に補完候補を出させる(Ctrl-iで補完するようにする)
 bindkey "^I" menu-complete   
 
-##############
-### zstyle ###
-##############
+##################
+### completion ###
+##################
 
 # 補完候補をハイライトする
 autoload -Uz compinit && compinit
 zstyle ':completion:*:default' menu select=2
 
+# 補完で大文字にもマッチ
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 ## 補完候補をオプションやディレクトリで分けて表示する
-# 補完関数の表示を強化する
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
 zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
@@ -153,8 +154,6 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 zstyle ':completion:*' use-cache true
 
 ## ディレクトリを切り替える時の色々な補完スタイル
-# あらかじめcdpathを適当に設定しておく
-cdpath=(~ ~/myapp/gae/ ~/myapp/gae/google_appengine/demos/)
 # カレントディレクトリに候補がない場合のみ cdpath 上のディレクトリを候補に出す
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 #cd は親ディレクトリからカレントディレクトリを選択しないので表示させないようにする (例: cd ../<TAB>):
@@ -187,8 +186,6 @@ function print_known_hosts (){
 ########################
 ### sshのhostname補完 ###
 ########################
-
-autoload -U compinit && compinit
 
 function print_known_hosts (){ 
     if [ -f $HOME/.ssh/known_hosts ]; then
@@ -376,6 +373,27 @@ function _update_vcs_info_msg() {
     RPROMPT="$prompt"
 }
 add-zsh-hook precmd _update_vcs_info_msg
+
+###################
+### cdr command ###
+###################
+
+# cdrコマンドを有効 ログアウトしても有効なディレクトリ履歴
+# cdr タブでリストを表示
+autoload -Uz add-zsh-hook
+autoload -Uz chpwd_recent_dirs cdr
+add-zsh-hook chpwd chpwd_recent_dirs
+# cdrコマンドで履歴にないディレクトリにも移動可能に
+zstyle ":chpwd:*" recent-dirs-default true
+
+#####################
+### 区切り文字の設定 ###
+#####################
+
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars "_-./;@"
+zstyle ':zle:*' word-style unspecified
 
 ###############
 ### aliases ###
