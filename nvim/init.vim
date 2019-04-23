@@ -1,20 +1,32 @@
-" dein.vimによるプラグイン管理
 if &compatible
-  set nocompatible
+  set nocompatible               " Be iMproved
 endif
 
-" dein.vimのclone先を指定する
-set runtimepath+=~/dotfiles/.vim/dein/repos/github.com/Shougo/dein.vim
+" Required:
+set runtimepath+=/Users/hiromu/.dotfiles/nvim/.cache/dein/repos/github.com/Shougo/dein.vim
 
-call dein#begin(expand('~/dotfiles/.vim/dein'))
+" Required:
+if dein#load_state('/Users/hiromu/.dotfiles/nvim/.cache/dein/')
+  call dein#begin('/Users/hiromu/.dotfiles/nvim/.cache/dein/')
 
-call dein#add('Shougo/dein.vim')
-call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+  " Let dein manage dein
+  " Required:
+  call dein#add('/Users/hiromu/.dotfiles/nvim/.cache/dein/repos/github.com/Shougo/dein.vim')
 
-" 補完、スニペット
-call dein#add('Shougo/neocomplete.vim')
-call dein#add('Shougo/neosnippet')
+  " Add or remove your plugins here like this:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
 
-" その他必要なプラグインはこちらに追加する
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
 
-call dein#end()
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif

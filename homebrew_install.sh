@@ -28,14 +28,16 @@ formulas=(
     zplug
     tmux
     peco
+    pyenv
+    pyenv-virtualenv
+    rbenv
+    ruby-build
+    ndenv
     nvim
     ansible
     hub
-    ndenv
     yarn
     python3
-    rbenv
-    ruby-build
     lua
     redis
     mysql@5.7
