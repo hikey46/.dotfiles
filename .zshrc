@@ -444,7 +444,7 @@ alias ll='ls -l'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-#alias vi='nvim'
+alias vi='nvim'
 alias cat='cat -n'
 alias less='less -NM'
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=aunpackexport PATH="/usr/local/opt/mysql@5.7/bin:$PATH"

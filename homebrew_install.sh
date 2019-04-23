@@ -28,6 +28,7 @@ formulas=(
     zplug
     tmux
     peco
+    nvim
     ansible
     hub
     ndenv

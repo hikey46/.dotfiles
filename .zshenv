@@ -54,4 +54,4 @@ path=(
     $path
 )
 
-cdpath={.. ~ ~/RubymineProjects}
+cdpath=(.. ~ ~/RubymineProjects)
