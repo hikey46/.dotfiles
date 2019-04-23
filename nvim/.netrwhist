@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/hiromu/.dotfiles/.git/refs'
+let g:netrw_dirhist_2='/Users/hiromu/.dotfiles/.git/refs/tags'
+let g:netrw_dirhist_3='/Users/hiromu/.dotfiles/.git/refs'
+let g:netrw_dirhist_4='/Users/hiromu/.dotfiles/.git/refs/remotes'
+let g:netrw_dirhist_5='/Users/hiromu/.dotfiles/.git/refs'
+let g:netrw_dirhist_6='/Users/hiromu/.dotfiles/.git/refs/heads'
+let g:netrw_dirhist_7='/Users/hiromu/.dotfiles/.git/refs'

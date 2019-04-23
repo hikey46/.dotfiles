@@ -1,4 +1,6 @@
-set nocompatible
+if &compatible
+  set nocompatible
+endif
 
 set encoding=utf-8
 scriptencoding utf-8
@@ -7,13 +9,17 @@ filetype plugin indent off
 syntax off
 
 " Required:
+set runtimepath+=/Users/hiromu/.dotfiles/nvim/.cache/dein/repos/github.com/Shougo/dein.vim
+
+" Required:
 let g:python_host_prog  = '/Users/hiromu/.pyenv/versions/neovim2/bin/python'
 let g:python3_host_prog = '/Users/hiromu/.pyenv/versions/neovim3/bin/python'
 let g:ruby_host_prog    = '/Users/hiromu/.rbenv/versions/2.5.3/bin/neovim-ruby-host'
 let g:node_host_prog    = '/Users/hiromu/.ndenv/versions/11.12.0/bin/neovim-node-host'
 
 let s:base_dir = expand('~/.dotfiles/nvim')
-let s:dein_dir = s:base_dir . '/plugins'
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.dotfiles/nvim/.cache') : $XDG_CACHE_HOME
+let s:dein_dir = s:base_dir . '/.cache/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 let s:toml_dir = s:base_dir . '/toml'
 
@@ -27,6 +33,7 @@ endif
 " Required:
 if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir)
+
     call dein#load_toml(s:toml_dir . '/general.toml',     {'lazy':0})
     call dein#load_toml(s:toml_dir . '/colorscheme.toml', {'lazy':0})
     call dein#load_toml(s:toml_dir . '/neovim.toml',      {'lazy':0})
@@ -43,8 +50,7 @@ endif
 filetype plugin indent on
 syntax enable
 
-" If there are the plugins that has not been installed on startup,
-" dein is checking and installing.
+" If you want to install not installed plugins on startup.
 if dein#check_install()
-    call dein#install()
+  call dein#install()
 endif
