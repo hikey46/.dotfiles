@@ -1,0 +1,6 @@
+[[plugins]]
+repo = 'scrooloose/nerdcommenter'
+hook_add = '''
+    let g:NERDSpaceDelims=1
+    let g:NERDDefaultAlign='left'
+'''

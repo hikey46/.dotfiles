@@ -9,7 +9,7 @@ filetype plugin indent off
 syntax off
 
 " Required:
-set runtimepath+=/Users/hiromu/.dotfiles/nvim/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=/Users/hiromu/.dotfiles/nvim/plugins/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
 let g:python_host_prog  = '/Users/hiromu/.pyenv/versions/neovim2/bin/python'
@@ -18,8 +18,8 @@ let g:ruby_host_prog    = '/Users/hiromu/.rbenv/versions/2.5.3/bin/neovim-ruby-h
 let g:node_host_prog    = '/Users/hiromu/.ndenv/versions/11.12.0/bin/neovim-node-host'
 
 let s:base_dir = expand('~/.dotfiles/nvim')
-let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.dotfiles/nvim/.cache') : $XDG_CACHE_HOME
-let s:dein_dir = s:base_dir . '/.cache/dein'
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.dotfiles/nvim/plugins') : $XDG_CACHE_HOME
+let s:dein_dir = s:base_dir . '/plugins/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 let s:toml_dir = s:base_dir . '/toml'
 
@@ -34,10 +34,20 @@ endif
 if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir)
 
-    call dein#load_toml(s:toml_dir . '/general.toml',     {'lazy':0})
-    call dein#load_toml(s:toml_dir . '/colorscheme.toml', {'lazy':0})
-    call dein#load_toml(s:toml_dir . '/neovim.toml',      {'lazy':0})
-    call dein#load_toml(s:toml_dir . '/completion.toml',  {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/general.toml',       {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/completion.toml',    {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/colorscheme.toml',   {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/airline.toml',       {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/ale.toml',           {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/nerdcommenter.toml', {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/nerdtree.toml',      {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/neovim.toml',        {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/denite.toml',        {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/vimproc.toml',       {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/vim-fugitive.toml',  {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/vim-gitgutter.toml', {'lazy':0})
+    call dein#load_toml(s:toml_dir . '/deoplete.toml',      {'lazy':1})
+    call dein#load_toml(s:toml_dir . '/lazy.toml',          {'lazy':1})
     if !has('nvim')
         call dein#add('roxma/nvim-yarp')
         call dein#add('roxma/vim-hug-neovim-rpc')

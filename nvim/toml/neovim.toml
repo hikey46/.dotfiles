@@ -3,3 +3,52 @@ repo = 'tpope/vim-endwise'
 
 [[plugins]]
 repo = 'Townk/vim-autoclose'
+
+# 非同期処理
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+
+# インデントを見やすく
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+
+# j,kによる移動を爆速化
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+
+[[plugins]]
+repo = 'reireias/vim-cheatsheet'
+
+# タグの生成やキーバインドの設定、タグジャンプの補助
+[[plugins]]
+repo = 'szw/vim-tags'
+
+# リファレンスの参照ができる
+# カーソルが当たっている状態でShift + k
+[[plugins]]
+repo = 'thinca/vim-ref'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+hook_post_update = '''
+  let g:quickrun_config = {'*': {'hook/time/enable': '1'},}
+'''
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+# Rails向けのコマンドを追加する
+[[plugins]]
+repo = 'tpope/vim-rails'
+
+# 囲み文字を変更する
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+# ログファイルを色付け
+[[plugins]]
+repo = 'vim-scripts/AnsiEsc.vim'
+
+# 行末の半角スペースを可視化
+[[plugins]]
+repo = 'bronson/vim-trailing-whitespace'
