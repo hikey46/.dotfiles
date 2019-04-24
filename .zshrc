@@ -79,31 +79,31 @@ zplug load --verbose
 ###############
 
 # カーソル位置は保持したままファイル名一覧を順次その場で表示
-setopt always_last_prompt    
+setopt always_last_prompt
 # 入力したコマンドが存在せず、かつディレクトリ名と一致するなら、ディレクトリに cd する
 setopt auto_cd
 # 補完候補を一覧表示にする
 setopt auto_list
 # 補完キー連打で順に補完候補を自動で補完
-setopt auto_menu             
+setopt auto_menu
 # カッコの対応などを自動的に補完
-setopt auto_param_keys       
+setopt auto_param_keys
 # http://voidy21.hatenablog.jp/entry/20090902/1251918174
 # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
-setopt auto_param_slash      
+setopt auto_param_slash
 # ディレクトリスタックの記憶。cd -<Tab>で過去の履歴から移動先の絶対パス候補を表示する。
-setopt auto_pushd 
+setopt auto_pushd
 # 語の途中でもカーソル位置で補完
-setopt complete_in_word      
+setopt complete_in_word
 # コマンドのスペルを訂正する
 setopt correct
 # 拡張グロブで補完(~とか^とか。例えばless *.txt~memo.txt ならmemo.txt 以外の *.txt にマッチ)
-setopt extended_glob  
+setopt extended_glob
 # 開始と終了を記録
 setopt extended_history
 # 明確なドットの指定なしで.から始まるファイルをマッチ
-setopt globdots 
-# 補完時にヒストリを自動的に展開         
+setopt globdots
+# 補完時にヒストリを自動的に展開
 setopt hist_expand
 # 重複を記録しない
 setopt hist_ignore_dups
@@ -116,36 +116,36 @@ setopt hist_no_store
 # ヒストリを呼び出してから実行する間に一旦編集可能
 setopt hist_verify
 # 余分な空白は詰めて記録
-setopt hist_reduce_blanks  
-# 古いコマンドと同じものは無視 
+setopt hist_reduce_blanks
+# 古いコマンドと同じものは無視
 setopt hist_save_no_dups
 # Ctrl-Dでシェルからログアウトしない
 setopt ignoreeof
 # 履歴をインクリメンタルに追加
 setopt inc_append_history
 # コマンドラインでも # 以降をコメントと見なす
-setopt interactive_comments  
+setopt interactive_comments
 # 補完候補一覧でファイルの種別を識別マーク表示 (訳注:ls -F の記号)
-setopt list_types            
+setopt list_types
 # コマンドラインの引数で --prefix=/usr などの = 以降でも補完できる
-setopt magic_equal_subst     
+setopt magic_equal_subst
 # ファイル名の展開でディレクトリにマッチした場合 末尾に / を付加
-setopt mark_dirs             
+setopt mark_dirs
 # ビープを鳴らさない
-setopt nobeep 
+setopt nobeep
 # バックグラウンドジョブが終了したらすぐに知らせる。
-setopt no_tify 
+setopt no_tify
 #日本語ファイル名等8ビットを通す
-setopt print_eight_bit  
+setopt print_eight_bit
 # pushd したとき、ディレクトリがすでにスタックに含まれていればスタックに追加しない
 setopt pushd_ignore_dups
 # historyの共有
 setopt share_history
 # コマンド実行後は右プロンプトを消す
-setopt transient_rprompt  
+setopt transient_rprompt
 
 # cdを展開する前に補完候補を出させる(Ctrl-iで補完するようにする)
-bindkey "^I" menu-complete   
+bindkey "^I" menu-complete
 
 ##################
 ### completion ###
@@ -216,9 +216,9 @@ bindkey '^R' peco-history-selection
 
 autoload -U compinit && compinit
 
-function print_known_hosts (){ 
+function print_known_hosts (){
     if [ -f $HOME/.ssh/known_hosts ]; then
-        cat $HOME/.ssh/known_hosts | tr ',' ' ' | cut -d' ' -f1 
+        cat $HOME/.ssh/known_hosts | tr ',' ' ' | cut -d' ' -f1
     fi
 }
 
@@ -226,9 +226,9 @@ function print_known_hosts (){
 ### sshのhostname補完 ###
 ########################
 
-function print_known_hosts (){ 
+function print_known_hosts (){
     if [ -f $HOME/.ssh/known_hosts ]; then
-        cat $HOME/.ssh/known_hosts | tr ',' ' ' | cut -d' ' -f1 
+        cat $HOME/.ssh/known_hosts | tr ',' ' ' | cut -d' ' -f1
     fi
 }
 _cache_hosts=($( print_known_hosts ))
@@ -413,9 +413,9 @@ function _update_vcs_info_msg() {
 }
 add-zsh-hook precmd _update_vcs_info_msg
 
-#####################
+########################
 ### 区切り文字の設定 ###
-#####################
+########################
 
 autoload -Uz select-word-style
 select-word-style default
