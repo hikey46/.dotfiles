@@ -48,6 +48,7 @@ formulas=(
     diff-so-fancy
     ImageMagick
     ffmpeg
+    nativefier
 )
 
 "brew tap..."
