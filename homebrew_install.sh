@@ -82,6 +82,7 @@ casks=(
     vagrant
     vagrant-manager
     google-japanese-ime
+    docker
 )
 
 echo "start brew cask install apps..."
