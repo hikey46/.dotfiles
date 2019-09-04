@@ -11,7 +11,7 @@ which brew >/dev/null 2>&1 && brew update
 
 echo "ok. run brew upgrade..."
 
-brew upgrade --all
+brew upgrade
 
 formulas=(
     git
@@ -51,11 +51,9 @@ formulas=(
     nativefier
 )
 
-"brew tap..."
+echo "brew tap..."
 brew tap homebrew/bundle
 brew tap homebrew/cask
-brew tap homebrew/dupes
-brew tap homebrew/versions
 brew tap homebrew/services
 brew tap sanemat/font
 

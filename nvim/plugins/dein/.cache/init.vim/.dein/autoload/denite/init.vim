@@ -35,8 +35,6 @@ function! denite#init#_initialize() abort
     return 1
   endif
 
-  let g:denite#_previewed_buffers = {}
-
   try
     if denite#util#has_yarp()
       let g:denite#_yarp = yarp#py3('denite')
@@ -49,7 +47,11 @@ function! denite#init#_initialize() abort
       endif
       call _denite_init()
     endif
+    call s:initialize_variables()
   catch
+    call denite#util#print_error(v:exception)
+    call denite#util#print_error(v:throwpoint)
+
     if denite#util#has_yarp()
       if !has('nvim') && !exists('*neovim_rpc#serveraddr')
         call denite#util#print_error(
@@ -69,72 +71,76 @@ function! denite#init#_initialize() abort
     return 1
   endtry
 endfunction
+function! s:initialize_variables() abort
+  let g:denite#_filter_winid = -1
+  let g:denite#_previewed_buffers = {}
+  let g:denite#_candidates = []
+  let g:denite#_ret = {}
+  let g:denite#_async_ret = {}
+  let g:denite#_filter_bufnr = -1
+  let g:denite#_serveraddr =
+        \ denite#util#has_yarp() ?
+        \ neovim_rpc#serveraddr() : v:servername
+  if g:denite#_serveraddr ==# ''
+    " Use NVIM_LISTEN_ADDRESS
+    let g:denite#_serveraddr = $NVIM_LISTEN_ADDRESS
+  endif
+endfunction
 
 function! denite#init#_user_options() abort
   return {
-        \ 'auto_accel': v:false,
         \ 'auto_action': '',
         \ 'auto_resize': v:false,
         \ 'auto_resume': v:false,
         \ 'buffer_name': 'default',
         \ 'cursor_pos': '',
-        \ 'cursor_wrap': v:false,
-        \ 'cursor_shape': (has('gui_running') ? v:true : v:false),
         \ 'cursorline': v:true,
         \ 'default_action': 'default',
         \ 'direction': 'botright',
         \ 'do': '',
         \ 'empty': v:true,
         \ 'expand': v:false,
-        \ 'highlight_cursor': 'Cursor',
+        \ 'filter_split_direction': 'botright',
+        \ 'filter_updatetime': 100,
+        \ 'highlight_filter_background': 'NormalFloat',
         \ 'highlight_matched_range': 'Underlined',
         \ 'highlight_matched_char': 'Search',
-        \ 'highlight_mode_normal': 'WildMenu',
-        \ 'highlight_mode_insert': 'CursorLine',
         \ 'highlight_preview_line': 'Search',
+        \ 'highlight_prompt': 'Special',
+        \ 'highlight_window_background': 'NormalFloat',
         \ 'ignorecase': v:true,
         \ 'immediately': v:false,
         \ 'immediately_1': v:false,
         \ 'input': '',
         \ 'matchers': '',
         \ 'max_candidate_width': 200,
-        \ 'mode': '',
+        \ 'max_dynamic_update_candidates': 20000,
         \ 'path': getcwd(),
         \ 'previewheight': &previewheight,
-        \ 'prompt': '#',
-        \ 'prompt_highlight': 'Statement',
+        \ 'prompt': '',
         \ 'post_action': 'none',
         \ 'quick_move': '',
         \ 'refresh': v:false,
         \ 'resume': v:false,
         \ 'reversed': v:false,
         \ 'root_markers': '',
-        \ 'scroll': 0,
         \ 'smartcase': v:false,
         \ 'sorters': '',
         \ 'split': 'horizontal',
         \ 'source_names': '',
+        \ 'start_filter': v:false,
         \ 'statusline': v:true,
-        \ 'updatetime': 100,
-        \ 'skiptime': 500,
         \ 'unique': v:false,
-        \ 'use_default_mappings': v:true,
         \ 'vertical_preview': v:false,
         \ 'wincol': &columns / 4,
         \ 'winheight': 20,
-        \ 'winrow': &lines / 3,
-        \ 'winwidth': 90,
+        \ 'winrow': &lines / 2 - 10,
+        \ 'winwidth': &columns / 2,
         \ 'winminheight': -1,
         \}
 endfunction
 function! denite#init#_deprecated_options() abort
-  return {
-        \ 'auto_highlight': '',
-        \ 'auto_preview': '',
-        \ 'select': 'cursor_pos',
-        \ 'force_quit': '',
-        \ 'quit': '',
-        \}
+  return {}
 endfunction
 
 function! denite#init#_python_version_check() abort

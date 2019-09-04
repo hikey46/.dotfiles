@@ -1,6 +1,6 @@
 *quickrun.txt*	コマンドを素早く実行します。
 
-Version: 0.7.0
+Version: 0.8.0
 Author: thinca <thinca+vim@gmail.com>
 英訳:
   * ujihisa <ujihisa at gmail com>
@@ -642,6 +642,13 @@ outputter は結果の出力を行うモジュールです。
 - "outputter/null"			*quickrun-module-outputter/null*
   出力を行いません。
 
+- "outputter/popup"			*quickrun-module-outputter/popup*
+  {|popup| 機能が必要}
+  {非常に実験的}
+  ポップアップに出力します。カーソルを動かすとポップアップは閉じられます。
+  ポップアップ機能自体が開発中の機能であるため、これは非常に実験的な機能です。
+  将来的にこの outputter は "buffer" outputter に取り込まれる予定です。
+
 
 ------------------------------------------------------------------------------
 HOOK						*quickrun-module-hook*
@@ -989,9 +996,12 @@ pandocを使用してmarkdownをhtmlにしてブラウザで開く (要|open-bro
 ==============================================================================
 更新履歴					*quickrun-changelog*
 
-dev
+0.8.0	2019-07-30
 	- |quickrun-module-runner/job| を追加。
 	- |quickrun-module-runner/terminal| を追加。
+	- runner/vimproc/pipe_status_index オプションを追加。
+	- hook/output_encode/fileformat オプションを追加。
+	- 多くのデフォルトの設定の追加および改善。
 	- 古い関数を削除。
 
 0.7.0	2016-07-02

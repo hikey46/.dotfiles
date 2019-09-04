@@ -8,23 +8,25 @@ import glob
 import os
 
 from denite.base.source import Base
-from denite.util import abspath, expand
+from denite.util import abspath, expand, Nvim, UserContext, Candidates
 
 
 class Source(Base):
 
-    def __init__(self, vim):
+    def __init__(self, vim: Nvim) -> None:
         super().__init__(vim)
 
         self.name = 'file'
         self.kind = 'file'
         self.matchers = ['matcher/fuzzy', 'matcher/hide_hidden_files']
+        self.is_volatile = True
 
-    def gather_candidates(self, context):
+    def gather_candidates(self, context: UserContext) -> Candidates:
         context['is_interactive'] = True
         candidates = []
         path = (context['args'][1] if len(context['args']) > 1
                 else context['path'])
+        path = abspath(self.vim, path)
         inp = expand(context['input'])
         filename = (inp if os.path.isabs(inp) else os.path.join(path, inp))
         if context['args'] and context['args'][0] == 'new':

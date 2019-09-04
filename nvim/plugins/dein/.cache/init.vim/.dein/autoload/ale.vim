@@ -97,7 +97,7 @@ function! s:Lint(buffer, should_lint_file, timer_id) abort
     " Apply ignore lists for linters only if needed.
     let l:ignore_config = ale#Var(a:buffer, 'linters_ignore')
     let l:disable_lsp = ale#Var(a:buffer, 'disable_lsp')
-    let l:linters = !empty(l:ignore_config)
+    let l:linters = !empty(l:ignore_config) || l:disable_lsp
     \   ? ale#engine#ignore#Exclude(l:filetype, l:linters, l:ignore_config, l:disable_lsp)
     \   : l:linters
 
@@ -156,7 +156,7 @@ function! ale#Queue(delay, ...) abort
     endif
 endfunction
 
-let s:current_ale_version = [2, 4, 0]
+let s:current_ale_version = [2, 5, 0]
 
 " A function used to check for ALE features in files outside of the project.
 function! ale#Has(feature) abort

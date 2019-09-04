@@ -1,117 +1,98 @@
-# rails.vim
+The NERDTree
+=============
 
-This is a massive (in a good way) Vim plugin for editing Ruby on Rails
-applications.
+Introduction
+------------
 
-* Easy navigation of the Rails directory structure.  `gf` considers
-  context and knows about partials, fixtures, and much more.  There are
-  two commands, `:A` (alternate) and `:R` (related) for easy jumping
-  between files, including favorites like model to schema, template to
-  helper, and controller to functional test.  Commands like `:Emodel`,
-  `:Eview`, `:Econtroller`, are provided to `:edit` files by type, along
-  with `S`, `V`, and `T` variants for `:split`, `:vsplit`, and
-  `:tabedit`.  Throw a bang on the end (`:Emodel foo!`) to automatically
-  create the file with the standard boilerplate if it doesn't exist.
-  `:help rails-navigation`
+The NERDTree is a file system explorer for the Vim editor. Using this plugin,
+users can visually browse complex directory hierarchies, quickly open files for
+reading or editing, and perform basic file system operations.
 
-* Enhanced syntax highlighting.  From `has_and_belongs_to_many` to
-  `distance_of_time_in_words`, it's here.
+This plugin can also be extended with custom mappings using a special API. The
+details of this API and of other NERDTree features are described in the
+included documentation.
 
-* Interface to the `rails` command.  Generally, use `:Rails console` to
-  call `rails console`.  Many commands have wrappers with additional features:
-  `:Generate controller Blog` generates a blog controller and loads the
-  generated files into the quickfix list, and `:Runner` wraps `rails runner`
-  and doubles as a direct test runner.  `:help rails-exec`
+![NERDTree Screenshot](https://github.com/scrooloose/nerdtree/raw/master/screenshot.png)
 
-* Default task runner.  Use `:Rails` (with no arguments) to run the current
-  test, spec, or feature.  Use `:.Rails` to do a focused run of just the
-  method, example, or scenario on the current line.  `:Rails` can also run
-  arbitrary migrations, load individual fixtures, and more.
-  `:help rails-default-task`
+Installation
+------------
 
-* Partial and concern extraction.  In a view, `:Extract {file}`
-  replaces the desired range (typically selected in visual line mode)
-  with `render '{file}'`, which is automatically created with your
-  content.  In a model or controller, a concern is created, with the
-  appropriate `include` declaration left behind.
-  `:help rails-:Extract`
+#### [pathogen.vim](https://github.com/tpope/vim-pathogen)
 
-* Fully customizable. Define "projections" at the global, app, or gem
-  level to define navigation commands and override the alternate file,
-  default rake task, syntax highlighting, and more.
-  `:help rails-projections`.
+    git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
 
-* Integration with other plugins.  If [dispatch.vim][] is installed, `:Rails`
-  and other command wrappers will use it for asynchronous execution.  Users of
-  [dadbod.vim](https://github.com/tpope/vim-dadbod) and
-  [dbext](http://www.vim.org/script.php?script_id=356) get easy access to
-  their application's database.  Users of
-  [abolish.vim](https://github.com/tpope/vim-abolish) get pluralize and
-  tableize coercions, and users of [bundler.vim][] get a smattering of
-  features.   `:help rails-integration`
+Then reload Vim, run `:helptags ~/.vim/bundle/nerdtree/doc/` or `:Helptags`, and check out `:help NERDTree.txt`.
 
-## Installation
 
-If you don't have a preferred installation method, I recommend
-installing [pathogen.vim](https://github.com/tpope/vim-pathogen), and
-then simply copy and paste:
+#### [apt-vim](https://github.com/egalpin/apt-vim)
 
-    cd ~/.vim/bundle
-    git clone https://github.com/tpope/vim-rails.git
-    vim -u NONE -c "helptags vim-rails/doc" -c q
+    apt-vim install -y https://github.com/scrooloose/nerdtree.git
 
-While not strictly necessary, [bundler.vim][] and [dispatch.vim][] are highly
-recommended.
+F.A.Q.
+------
 
-[bundler.vim]: https://github.com/tpope/vim-bundler
-[dispatch.vim]: https://github.com/tpope/vim-dispatch
+> Is there any support for `git` flags?
 
-## FAQ
+Yes, install [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin).
 
-> I installed the plugin and started Vim.  Why does only the `:Rails`
-> command exist?
+---
 
-This plugin cares about the current file, not the current working
-directory.  Edit a file from a Rails application.
+> Can I have the nerdtree on every tab automatically?
 
-> I opened a new tab.  Why does only the `:Rails` command exist?
+Nope. If this is something you want then chances are you aren't using tabs and
+buffers as they were intended to be used. Read this
+http://stackoverflow.com/questions/102384/using-vims-tabs-like-buffers
 
-This plugin cares about the current file, not the current working directory.
-Edit a file from a Rails application.  You can use `:AT` and the `:T` family
-of commands to open a new tab and edit a file at the same time.
+If you are interested in this behaviour then consider [vim-nerdtree-tabs](https://github.com/jistr/vim-nerdtree-tabs)
 
-> Can I use rails.vim to edit Rails engines?
+---
+> How can I open a NERDTree automatically when vim starts up?
 
-It's not supported, but if you `touch config/environment.rb` in the root
-of the engine, things should mostly work.
+Stick this in your vimrc: `autocmd vimenter * NERDTree`
 
-> Can I use rails.vim to edit other Ruby projects?
+---
+> How can I open a NERDTree automatically when vim starts up if no files were specified?
 
-I wrote [rake.vim](https://github.com/tpope/vim-rake) for exactly that
-purpose.  It activates for any project with a `Rakefile` that's not a
-Rails application.
+Stick this in your vimrc:
 
-> What Rails versions are supported?
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-All of them, although you may notice a few minor breakages if you dip below
-3.0.  A few features like syntax highlighting tend to reflect the latest
-version only.
+Note: Now start vim with plain `vim`, not `vim .`
 
-> Didn't rails.vim used to handle indent settings?
+---
+> How can I open NERDTree automatically when vim starts up on opening a directory?
 
-It got yanked after increasing contention over JavaScript.  Check out
-[sleuth.vim](https://github.com/tpope/vim-sleuth).
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
-## Self-Promotion
+This window is tab-specific, meaning it's used by all windows in the tab. This trick also prevents NERDTree from hiding when first selecting a file.
 
-Like rails.vim? Follow the repository on
-[GitHub](https://github.com/tpope/vim-rails) and vote for it on
-[vim.org](http://www.vim.org/scripts/script.php?script_id=1567).  And if
-you're feeling especially charitable, follow [tpope](http://tpo.pe/) on
-[Twitter](http://twitter.com/tpope) and
-[GitHub](https://github.com/tpope).
+Note: Executing `vim ~/some-directory` will open NERDTree and a new edit window. `exe 'cd '.argv()[0]` sets the `pwd` of the new edit window to `~/some-directory`
 
-## License
+---
+> How can I map a specific key or shortcut to open NERDTree?
 
-Copyright (c) Tim Pope.  Distributed under the same terms as Vim itself.
-See `:help license`.
+Stick this in your vimrc to open NERDTree with `Ctrl+n` (you can set whatever key you want):
+
+    map <C-n> :NERDTreeToggle<CR>
+
+---
+> How can I close vim if the only window left open is a NERDTree?
+
+Stick this in your vimrc:
+
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+---
+> Can I have different highlighting for different file extensions?
+
+See here: https://github.com/scrooloose/nerdtree/issues/433#issuecomment-92590696
+
+---
+> How can I change default arrows?
+
+Use these variables in your vimrc. Note that below are default arrow symbols
+
+    let g:NERDTreeDirArrowExpandable = '▸'
+    let g:NERDTreeDirArrowCollapsible = '▾'

@@ -6,11 +6,12 @@
 
 import re
 import tempfile
+import typing
 from pathlib import Path
 from subprocess import CalledProcessError, check_output
 
 from denite.base.source import Base
-from denite.util import parse_tagline
+from denite.util import parse_tagline, Nvim, UserContext, Candidates
 
 OUTLINE_HIGHLIGHT_SYNTAX = [
     {'name': 'Type', 'link': 'Statement', 're': r'\[.\{-}\]'},
@@ -20,7 +21,7 @@ OUTLINE_HIGHLIGHT_SYNTAX = [
 
 
 class Source(Base):
-    def __init__(self, vim):
+    def __init__(self, vim: Nvim) -> None:
         super().__init__(vim)
 
         self.name = 'outline'
@@ -33,14 +34,14 @@ class Source(Base):
             'encoding': 'utf-8',
         }
 
-    def on_init(self, context):
+    def on_init(self, context: UserContext) -> None:
         context['__path'] = (
             context['args'][0]
             if len(context['args']) > 0
             else self.vim.current.buffer.name
         )
 
-    def highlight(self):
+    def highlight(self) -> None:
         for syn in OUTLINE_HIGHLIGHT_SYNTAX:
             self.vim.command(
                 'syntax match {0}_{1} /{2}/ contained containedin={0}'.format(
@@ -53,22 +54,26 @@ class Source(Base):
                 )
             )
 
-    def gather_candidates(self, context):
+    def gather_candidates(self, context: UserContext) -> Candidates:
         with tempfile.NamedTemporaryFile(
             mode='w', encoding=self.vars['encoding']
         ) as tf:
-            args = []
+            args: typing.List[str] = []
             args += self.vars['command']
             args += self.vars['options']
             args += [self.vars['file_opt'], tf.name]
             args += [context['__path']]
             self.print_message(context, args)
+            # Close this file before giving to ctags
+            # Otherwise this will error on Windows
             tf.close()
 
             try:
                 check_output(args).decode(self.vars['encoding'], 'replace')
             except CalledProcessError:
                 return []
+
+            ignore_types = self.vars['ignore_types']
 
             candidates = []
             with open(tf.name, encoding=self.vars['encoding'],
@@ -77,6 +82,8 @@ class Source(Base):
                     if re.match('!', line) or not line:
                         continue
                     info = parse_tagline(line.rstrip(), tf.name)
+                    if info['type'] in ignore_types:
+                        continue
                     candidate = {
                         'word': info['name'],
                         'action__path': info['file']

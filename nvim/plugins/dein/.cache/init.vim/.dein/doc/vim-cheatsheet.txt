@@ -42,6 +42,26 @@ g:cheatsheet#vsplit
 
 		Defaults: 0
 
+						*g:cheatsheet#float_window*
+g:cheatsheet#float_window
+		If you set it to 1, cheatsheet opens using float window.
+		You cat use the float window at Neovim 4.
+		You can close float window q key or :Cheat command.
+
+		Defaults: 0
+
+						*g:cheatsheet#float_window_width_ratio*
+g:cheatsheet#float_window_width_ratio
+		Set float window width size ratio with 0 ot 1 float value.
+
+		Default: 0.8
+
+						*g:cheatsheet#float_window_height_ratio*
+g:cheatsheet#float_window_height_ratio
+		Set float window height size ratio with 0 ot 1 float value.
+
+		Default: 0.9
+
 ------------------------------------------------------------------------------
 COMMANDS					*vim-cheatsheet-commands*
 

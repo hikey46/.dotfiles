@@ -6,30 +6,31 @@
 
 import re
 import os
-from itertools import filterfalse
+import typing
 
 from denite.kind.openable import Kind as Openable
+from denite.util import Nvim, UserContext, Candidate
 from denite import util
 
 
 class Kind(Openable):
 
-    def __init__(self, vim):
+    def __init__(self, vim: Nvim) -> None:
         super().__init__(vim)
 
         self._vim = vim
         self.name = 'file'
         self.default_action = 'open'
-        self.persist_actions += ['preview', 'highlight']
-        self._previewed_target = {}
+        self.persist_actions += ['preview', 'highlight']  # type: ignore
+        self._previewed_target: typing.Dict[str, Candidate] = {}
 
-    def action_open(self, context):
+    def action_open(self, context: UserContext) -> None:
         self._open(context, 'edit')
 
-    def action_drop(self, context):
+    def action_drop(self, context: UserContext) -> None:
         self._open(context, 'drop')
 
-    def action_new(self, context):
+    def action_new(self, context: UserContext) -> None:
         path = util.input(self.vim, context, 'New file: ', completion='file')
         if not path:
             return
@@ -39,7 +40,7 @@ class Kind(Openable):
         }]
         self.action_open(context)
 
-    def action_preview(self, context):
+    def action_preview(self, context: UserContext) -> None:
         target = context['targets'][0]
 
         if (context['auto_action'] != 'preview' and
@@ -58,6 +59,7 @@ class Kind(Openable):
 
         self.vim.call('denite#helper#preview_file', context, path)
         self.vim.command('wincmd P')
+        self.vim.current.window.options['foldenable'] = False
 
         if not listed:
             self._add_previewed_buffer(self.vim.call('bufnr', '%'))
@@ -67,7 +69,7 @@ class Kind(Openable):
         self.vim.call('win_gotoid', prev_id)
         self._previewed_target = target
 
-    def action_highlight(self, context):
+    def action_highlight(self, context: UserContext) -> None:
         target = context['targets'][0]
         if 'action__bufnr' in target:
             bufnr = target['action__bufnr']
@@ -84,13 +86,13 @@ class Kind(Openable):
         self._highlight(context, int(target.get('action__line', 0)))
         self.vim.call('win_gotoid', prev_id)
 
-    def action_quickfix(self, context):
+    def action_quickfix(self, context: UserContext) -> None:
         self._qfloc(context, 'qf')
 
-    def action_location(self, context):
+    def action_location(self, context: UserContext) -> None:
         self._qfloc(context, 'loc')
 
-    def _qfloc(self, context, listtype):
+    def _qfloc(self, context: UserContext, listtype: str) -> None:
         qfloclist = []
         for target in [x for x in context['targets']
                        if 'action__line' in x and 'action__text' in x]:
@@ -112,7 +114,7 @@ class Kind(Openable):
             self.vim.call('setloclist', wininfo['winnr'], qfloclist)
             self.vim.command('lopen')
 
-    def _open(self, context, command):
+    def _open(self, context: UserContext, command: str) -> None:
         cwd = self.vim.call('getcwd')
         for target in context['targets']:
             if 'action__bufnr' in target:
@@ -130,51 +132,26 @@ class Kind(Openable):
                     path = os.path.relpath(path, cwd)
 
                 bufnr = self.vim.call('bufnr', match_path)
-                if bufnr <= 0 or not self.vim.call('buflisted', bufnr):
+                if (command == 'edit' and bufnr > 0 and
+                        self.vim.call('buflisted', bufnr)):
+                    self.vim.command('buffer' + str(bufnr))
+                else:
                     self.vim.call(
                         'denite#util#execute_path', command, path)
-                elif bufnr != self.vim.current.buffer.number:
-                    self.vim.command('buffer' + str(bufnr))
 
             self._remove_previewed_buffer(bufnr)
             self._jump(context, target)
 
-    def _highlight(self, context, line):
+    def _highlight(self, context: UserContext, line: int) -> None:
         util.clearmatch(self.vim)
         self.vim.current.window.vars['denite_match_id'] = self.vim.call(
             'matchaddpos', context['highlight_preview_line'], [line])
 
-    def _get_preview_window(self):
-        return next(filterfalse(lambda x:
-                                not x.options['previewwindow'],
-                                self.vim.windows), None)
+    def _get_preview_window(self) -> bool:
+        return bool(self._vim.call('denite#helper#_get_preview_window'))
 
     # Needed for openable actions
-    def _jump(self, context, target):
-        if 'action__pattern' in target:
-            self.vim.call('search', target['action__pattern'], 'w')
-
-        line = int(target.get('action__line', 0))
-        col = int(target.get('action__col', 0))
-
-        try:
-            if line > 0:
-                self.vim.call('cursor', [line, 0])
-                if 'action__col' not in target:
-                    pos = self.vim.current.line.lower().find(
-                        context['input'].lower())
-                    if pos >= 0:
-                        self.vim.call('cursor', [0, pos + 1])
-            if col > 0:
-                self.vim.call('cursor', [0, col])
-        except Exception:
-            pass
-
-        # Open folds
-        self.vim.command('normal! zv')
-
-    # Needed for openable actions
-    def _winid(self, target):
+    def _winid(self, target: Candidate) -> typing.Optional[int]:
         if 'action__bufnr' in target:
             bufnr = target['action__bufnr']
         else:
@@ -185,12 +162,12 @@ class Kind(Openable):
         winids = self.vim.call('win_findbuf', bufnr)
         return None if len(winids) == 0 else winids[0]
 
-    def _add_previewed_buffer(self, bufnr):
+    def _add_previewed_buffer(self, bufnr: int) -> None:
         previewed_buffers = self._vim.vars['denite#_previewed_buffers']
         previewed_buffers[str(bufnr)] = 1
         self._vim.vars['denite#_previewed_buffers'] = previewed_buffers
 
-    def _remove_previewed_buffer(self, bufnr):
+    def _remove_previewed_buffer(self, bufnr: int) -> None:
         previewed_buffers = self._vim.vars['denite#_previewed_buffers']
         if str(bufnr) in previewed_buffers:
             previewed_buffers.remove(str(bufnr))

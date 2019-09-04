@@ -1,6 +1,6 @@
 *deoplete.txt*	Dark powered asynchronous completion framework for Neovim/Vim8.
 
-Version: 5.1
+Version: 5.2
 Author: Shougo <Shougo.Matsu at gmail.com>
 License: MIT license
 
@@ -139,12 +139,23 @@ candidate_marks
 >
 		call deoplete#custom#option('candidate_marks',
 		      \ ['A', 'S', 'D', 'F', 'G'])
-		inoremap <expr>A       deoplete#insert_candidate(0)
-		inoremap <expr>S       deoplete#insert_candidate(1)
-		inoremap <expr>D       deoplete#insert_candidate(2)
-		inoremap <expr>F       deoplete#insert_candidate(3)
-		inoremap <expr>G       deoplete#insert_candidate(4)
+		inoremap <expr>A       pumvisible() ?
+		\ deoplete#insert_candidate(0) : 'A'
+		inoremap <expr>S       pumvisible() ?
+		\ deoplete#insert_candidate(1) : 'S'
+		inoremap <expr>D       pumvisible() ?
+		\ deoplete#insert_candidate(2) : 'D'
+		inoremap <expr>F       pumvisible() ?
+		\ deoplete#insert_candidate(3) : 'F'
+		inoremap <expr>G       pumvisible() ?
+		\ deoplete#insert_candidate(4) : 'G'
 <
+						*deoplete-options-check_stderr*
+check_stderr
+		If it is True, deoplete check stderr output.
+
+		Default value: v:true
+
 						*deoplete-options-ignore_case*
 ignore_case
 		If it is True, deoplete ignores case.
@@ -511,18 +522,11 @@ deoplete#manual_complete([{sources}])
 		inoremap <silent><expr> <TAB>
 		\ pumvisible() ? "\<C-n>" :
 		\ <SID>check_back_space() ? "\<TAB>" :
-		\ deoplete#mappings#manual_complete()
+		\ deoplete#manual_complete()
 		function! s:check_back_space() abort "{{{
 		let col = col('.') - 1
 		return !col || getline('.')[col - 1]  =~ '\s'
 		endfunction"}}}
-<
-					*deoplete#refresh()*
-deoplete#refresh()
-		Refresh the candidates.
-		Note: It must be in |map-<expr>|.
->
-		inoremap <expr><C-l>     deoplete#refresh()
 <
 				*deoplete#smart_close_popup()*
 deoplete#smart_close_popup()
@@ -781,13 +785,14 @@ converter_reorder_attr
 		first in the suggestion according to their attributes.
 
 >
-		call deoplete#custom#filter('attrs_order', {
-		\ 'javascript': {
-		\    		'kind': [
-		\			'Function',
-		\			'Property'
-		\			]
-		\ },
+		call deoplete#custom#filter('converter_reorder_attr',
+		\  'attrs_order', {
+		\    'javascript': {
+		\      'kind': [
+		\        'Function',
+		\        'Property'
+		\      ]
+		\   },
 		\})
 <
 
@@ -829,15 +834,15 @@ converter_reorder_attr
 		expression.
 
 >
-		call deoplete#custom#filter('attrs_order', {
-		\ 'ruby': {
-		\    		'kind': [
-		\			'!Class',
-		\			],
-		\
-		\		'abbr': [
-		\			'ExtensionClass'
-		\			]
+		call deoplete#custom#filter('converter_reorder_attr',
+		\ 'attrs_order', {
+		\   'ruby': {
+		\     'kind': [
+		\       '!Class',
+		\     ],
+		\     'abbr': [
+		\       'ExtensionClass'
+		\     ]
 		\ },
 		\})
 <
@@ -1220,8 +1225,12 @@ vars		(Dictionary)			(Optional)
 			indicating that this is the last portion of the
 			candidates.
 
+			Note: The feature is deprecated and not recommended.
+			You should use callback system by
+			|deoplete#auto_complete()| instead.
+
 	The below is an example of async deoplete source.
-	If "context['is_async']" is True, the gather_candidates is called
+	While "context['is_async']" is True, the gather_candidates is called
 	repeatedly.
 >
 	from deoplete.base.source import Base
@@ -1235,9 +1244,13 @@ vars		(Dictionary)			(Optional)
 	        self._count = 0
 
 	    def gather_candidates(self, context):
+	        if not context['input']:
+	            return []
+	        if self._count >= 10:
+	            self._count = 0
 	        self._count += 1
 	        context['is_async'] = self._count < 10
-	        return [context['input'] + str(self._count)]
+	        return [context['input'].split()[-1] + str(self._count)]
 <
 		is_refresh		(Bool)
 			If the input is changed, it will be "True".
@@ -1819,6 +1832,19 @@ Q: I want to complete AAA using deoplete.
 
 A: You can create the source for it. Why don't create the source if you need?
 
+Q: I want to use CSS omnifunc with context_filetype.vim.
+
+A: >
+	if !exists('g:context_filetype#same_filetypes')
+	  let g:context_filetype#filetypes = {}
+	endif
+	let g:context_filetype#filetypes.svelte = [
+	\    {'filetype' : 'css', 'start' : '<style>', 'end' : '</style>'},
+	\ ]
+	call deoplete#custom#var('omni', 'functions', {
+	\ 'css': ['csscomplete#CompleteCSS']
+	\})
+
 							*deoplete-faq-general*
 4. General Questions~
 
@@ -1854,6 +1880,13 @@ A: https://github.com/deoplete-plugins/deoplete-jedi/issues/35
 
 ==============================================================================
 COMPATIBILITY					*deoplete-compatibility*
+
+2019.08.11
+* Remove deoplete#refresh().  It does not work.  You should use
+  deoplete#manual_complete() instead.
+
+2019.07.16
+* Remove old deoplete#mappings# mappings.  You need to use new mappings.
 
 2019.04.16
 * Split tag source to https://github.com/deoplete-plugins/deoplete-tag.

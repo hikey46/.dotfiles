@@ -163,6 +163,7 @@ quickrun-module-outputter/loclist	quickrun.jax	/*quickrun-module-outputter\/locl
 quickrun-module-outputter/message	quickrun.jax	/*quickrun-module-outputter\/message*
 quickrun-module-outputter/multi	quickrun.jax	/*quickrun-module-outputter\/multi*
 quickrun-module-outputter/null	quickrun.jax	/*quickrun-module-outputter\/null*
+quickrun-module-outputter/popup	quickrun.jax	/*quickrun-module-outputter\/popup*
 quickrun-module-outputter/quickfix	quickrun.jax	/*quickrun-module-outputter\/quickfix*
 quickrun-module-outputter/variable	quickrun.jax	/*quickrun-module-outputter\/variable*
 quickrun-module-runner	quickrun.jax	/*quickrun-module-runner*

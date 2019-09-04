@@ -1,2 +1,8 @@
+lib/*
 doc/tags
-__pycache__/
+*.obj
+*.o
+*.so
+*.dll
+*.swp
+*~

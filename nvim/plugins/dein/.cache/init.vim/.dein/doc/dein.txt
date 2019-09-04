@@ -127,7 +127,7 @@ dein#begin({base-path}, [{vimrcs}])
 		For example, "Shougo/dein.vim" will be downloaded in
 		"{base-path}/repos/github.com/Shougo/dein.vim" directory.
 		{vimrcs} is a list of compared .vimrc and/or other
-		configuration files. The default is |$MYVIMRC|.
+		configuration(TOML) files. The default is |$MYVIMRC|.
 		The typical {base-path} is "~/.cache/dein" or
 		"~/.local/share/dein".
 
@@ -225,7 +225,8 @@ dein#each({command}[, {plugins}])
 dein#end()
 		End dein configuration block.
 		You must not use the plugins in |dein#begin()| block.
-		It executes |dein#recache_runtimepath()| automatically.
+		If you enable |g:dein#auto_recache|, it executes
+		|dein#recache_runtimepath()| automatically.
 		Note: 'runtimepath' is changed after |dein#end()|.
 
 							*dein#get()*
@@ -303,9 +304,21 @@ dein#load_toml({filename}, [{options}])
 		|dein-options| for keys to set in {options}.
 		Note: TOML parser is slow.  You should use it with
 		|dein#load_state()| and |dein#save_state()|.
+		Note: You need to specify toml files in |dein#begin()|
+		argument.
 
 		For toml file formats: |dein-toml|
+>
+	let s:toml = '~/test_vim/lazy.toml'
+	if dein#load_state('~/test_vim/.cache/dein', [$MYVIMRC, s:toml])
+	  call dein#begin('~/test_vim/.cache/dein')
 
+	  call dein#load_toml(s:toml, {'lazy': 1})
+
+	  call dein#end()
+	  call dein#save_state()
+	endif
+<
 							*dein#local()*
 dein#local({directory}, [{options}, [{names}]])
 		Add the subdirectories in {directory} to 'runtimepath', like
@@ -396,6 +409,14 @@ dein#tap({plugin-name})
 
 ------------------------------------------------------------------------------
 VARIABLES						*dein-variables*
+
+						*g:dein#auto_recache*
+g:dein#auto_recache
+		If you set it to 1, recache automatically if necessary when
+		saving the vimrc, toml file.
+		Note: It reloads your $MYVIMRC.
+
+		Default: 0
 
 						*g:dein#cache_directory*
 g:dein#cache_directory
@@ -533,7 +554,6 @@ g:dein#types#git#pull_command
 		The git command used to pull updates.
 
 		Default: "pull --ff --ff-only"
-
 
 ------------------------------------------------------------------------------
 OPTIONS							*dein-options*
@@ -1184,6 +1204,21 @@ Q: I want to update dein.vim from shell command line.
 A: Please execute the command line like this. >
 	vim -N -u ~/.vim/init.vim -c \
 	"try | call dein#update() | finally | qall! | endtry" -V1 -es
+
+Q: I want to set build conditions.
+
+A: Please use |dein-hooks-post_update|. >
+
+	[[plugins]]
+	repo = 'autozimu/LanguageClient-neovim'
+	hook_post_update = '''
+	if has('win32') || has('win64')
+	    call system(
+	    \ 'powershell -executionpolicy bypass -File install.ps1')
+	else
+	    call system('bash install.sh')
+	endif
+	'''
 
 ==============================================================================
 COMPATIBILITY						*dein-compatibility*

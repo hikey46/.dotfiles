@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -U
+set -u
 
 DOTPATH=~/.dotfiles
 

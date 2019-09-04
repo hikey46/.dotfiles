@@ -9,11 +9,12 @@ from fnmatch import translate
 from re import search
 
 from denite.base.filter import Base
+from denite.util import Nvim, UserContext, Candidates
 
 
 class Filter(Base):
 
-    def __init__(self, vim):
+    def __init__(self, vim: Nvim) -> None:
         super().__init__(vim)
 
         self.name = 'matcher/ignore_globs'
@@ -27,11 +28,11 @@ class Filter(Base):
             ]
         }
 
-    def filter(self, context):
+    def filter(self, context: UserContext) -> Candidates:
         # Convert globs
         patterns = []
         for glob in self.vars['ignore_globs']:
-            if not isabs(glob):
+            if not isabs(glob) and ':' not in glob:
                 glob = '*' + sep + glob
             if glob[:2] == '.' + sep:
                 glob = context['path'] + glob[1:]

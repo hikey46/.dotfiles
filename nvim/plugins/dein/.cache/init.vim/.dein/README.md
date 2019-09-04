@@ -1,147 +1,159 @@
-# precious.vim
+# NERD Commenter
 
-現在のカーソル位置のコンテキストによって filetype を切り換える為のプラグインです。
+Comment functions so powerful—no comment necessary.
 
-Set the buffer filetype based on the code block the cursor currently resides in.
+## Installation
 
-The code block filetype is determined by the [context_filetype.vim](https://github.com/Shougo/context_filetype.vim) plugin.
+### Via Plugin Manager (Recommended)
 
-## Requirement
+#### [Vim-Plug](https://github.com/junegunn/vim-plug)
 
-* [context_filetype.vim](https://github.com/Shougo/context_filetype.vim)
-* [vim-textobj-user](https://github.com/kana/vim-textobj-user)
-    * `<Plug>(textobj-precious-i)` を使用したい時のみ必要。
-* [quickrun.vim](https://github.com/thinca/vim-quickrun)
-    * `<Plug>(precious-quickrun-op)` を使用したい時のみ必要。
+1. Add `Plug 'scrooloose/nerdcommenter'` to your vimrc file.
+2. Reload your vimrc or restart
+3. Run `:PlugInstall`
 
+#### [Vundle](https://github.com/VundleVim/Vundle.vim) or similar
 
+1. Add `Plugin 'scrooloose/nerdcommenter'` to your vimrc file.
+2. Reload your vimrc or restart
+3. Run `:BundleInstall`
 
-## Screencapture
-![capture](https://f.cloud.github.com/assets/214488/810517/1d435a7c-eeb9-11e2-8b98-b2275db39695.gif)
+#### [NeoBundle](https://github.com/Shougo/neobundle.vim)
 
+1. Add `NeoBundle 'scrooloose/nerdcommenter'` to your vimrc file.
+2. Reload your vimrc or restart
+3. Run `:NeoUpdate`
 
-## Supported
-* c
-    * masm
-    * gas
-* cpp
-    * masm
-    * gas
-* d
-    * masm
-* eruby
-    * ruby
-* help
-    * vim
-* html
-    * javascript
-    * coffee
-    * css
-* int-nyaos
-    * lua
-* lua
-    * vim
-* nyaos
-    * lua
-* perl16
-    * pir
-* python
-    * vim
-* vim
-    * python
-    * ruby
-    * lua
-* vimshell
-    * vim
-* xhtml
-    * javascript
-    * coffee
-    * css
-* markdown
+#### [Pathogen](https://github.com/tpope/vim-pathogen)
 
-
-## Example
-
-```vim
-" test.vim
-" set filetype=vim --------------------------------------------------
-echo "hello, world"
-
-
-" set filetype=ruby -----------------------------
-ruby << EOF
-
-result = (1..10).map(&:to_s).join("-")
-puts result
-
-EOF
-"---------------------------------------------------------
-
-
-" set filetype=python ----------------------------
-python << EOF
-
-print map(str, range(1, 10))
-print "-".join(map(str, range(1, 10)))
-
-EOF
-"---------------------------------------------------------
-
-echo join(range(10), "-")
-
-
-" autocmd
-" コンテキストに入った時の処理をフック
-augroup test
-	autocmd!
-	autocmd User PreciousFileType      :echo precious#context_filetype()
-	" ruby のコンテキストに入った時に tabstop を設定する
-	autocmd User PreciousFiletype_ruby :PreciousSetContextLocal tabstop=8
-augroup END
-
-
-" insert mode に入った時に 'filetype' を切り換える。
-" カーソル移動時の自動切り替えを無効化
-" let g:precious_enable_switch_CursorMoved = {
-" \	"*" : 0
-" \}
-" let g:precious_enable_switch_CursorMoved_i = {
-" \	"*" : 0
-" \}
-" 
-" " insert に入った時にスイッチし、抜けた時に元に戻す
-" augroup test
-" 	autocmd!
-" 	autocmd InsertEnter * :PreciousSwitch
-" 	autocmd InsertLeave * :PreciousReset
-" augroup END
-
-
-" quickrun.vim との連携
-" <Space>qic で quickrun.vim する
-" filetype が切り替わってない状態でも
-" コンテキストから quickrun.vim で使用する type を決定
-" nmap <Space>q <Plug>(precious-quickrun-op)
-" omap ic <Plug>(textobj-precious-i)
-" vmap ic <Plug>(textobj-precious-i)
-"------------------------------------------------------------------------------
+```sh
+cd ~/.vim/bundle
+git clone https://github.com/scrooloose/nerdcommenter.git
 ```
 
+### Manual Installation
 
-## Implementations
+#### Unix
 
-* コンテキストに入った時に自動的に filetype を切り換える
-* コンテキストが切り替わった時に autocmd User で処理がフック出来る
-* コンテキストの範囲の textobj に対応
-* quickrun.vim との連携
-    * コンテキストの範囲を quickrun する
-    * filetype が切り替わってない状態でも type を設定
+(For Neovim, change `~/.vim/` to `~/.config/nvim/`.)
 
+```sh
+curl -fLo ~/.vim/plugin/NERD_Commenter.vim --create-dirs \
+  https://raw.githubusercontent.com/scrooloose/nerdcommenter/master/plugin/NERD_commenter.vim
+curl -fLo ~/.vim/doc/NERD_Commenter.txt --create-dirs \
+  https://raw.githubusercontent.com/scrooloose/nerdcommenter/master/doc/NERD_commenter.txt
+```
 
-## TODO
+#### Windows (PowerShell)
 
-* matcher、switcher を使用した機能の拡張
-* matcher、switcher の優先順位付け
-* コンテキストの範囲を取得
+```powershell
+md ~\vimfiles\plugin
+md ~\vimfiles\doc
+$pluguri = 'https://raw.githubusercontent.com/scrooloose/nerdcommenter/master/plugin/NERD_commenter.vim'
+$docsuri = 'https://raw.githubusercontent.com/scrooloose/nerdcommenter/master/doc/NERD_commenter.txt'
+(New-Object Net.WebClient).DownloadFile($pluguri, $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("~\vimfiles\plugin\NERD_commenter.vim"))
+(New-Object Net.WebClient).DownloadFile($docsuri, $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("~\vimfiles\doc\NERD_commenter.txt"))
+```
 
+### Post Installation
 
+Make sure that you have filetype plugins enabled, as the plugin makes use of **|commentstring|** where possible (which is usually set in a filetype plugin). See **|filetype-plugin-on|** for details, but the short version is make sure this line appears in your vimrc:
+
+```sh
+filetype plugin on
+```
+
+## Usage
+
+### Documentation
+
+Please see the vim help system for full documentation of all options: `:help nerdcommenter`
+
+### Settings
+
+Several settings can be added to your vimrc to change the default behavior. Some examples:
+
+```vim
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+```
+
+### Default mappings
+
+The following key mappings are provided by default (there is also a menu provided that contains menu items corresponding to all the below mappings):
+
+Most of the following mappings are for normal/visual mode only. The **|NERDCommenterInsert|** mapping is for insert mode only.
+
+  * `[count]<leader>cc` **|NERDCommenterComment|**
+
+    Comment out the current line or text selected in visual mode.
+
+  * `[count]<leader>cn` **|NERDCommenterNested|**
+
+    Same as <leader>cc but forces nesting.
+
+  * `[count]<leader>c<space>` **|NERDCommenterToggle|**
+
+    Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa.
+
+  * `[count]<leader>cm` **|NERDCommenterMinimal|**
+
+    Comments the given lines using only one set of multipart delimiters.
+
+  * `[count]<leader>ci` **|NERDCommenterInvert|**
+
+    Toggles the comment state of the selected line(s) individually.
+
+  * `[count]<leader>cs` **|NERDCommenterSexy|**
+
+    Comments out the selected lines with a pretty block formatted layout.
+
+  * `[count]<leader>cy` **|NERDCommenterYank|**
+
+    Same as <leader>cc except that the commented line(s) are yanked first.
+
+  * `<leader>c$` **|NERDCommenterToEOL|**
+
+    Comments the current line from the cursor to the end of line.
+
+  * `<leader>cA` **|NERDCommenterAppend|**
+
+    Adds comment delimiters to the end of line and goes into insert mode between them.
+
+  * **|NERDCommenterInsert|**
+
+    Adds comment delimiters at the current cursor position and inserts between. Disabled by default.
+
+  * `<leader>ca` **|NERDCommenterAltDelims|**
+
+    Switches to the alternative set of delimiters.
+
+  * `[count]<leader>cl` **|NERDCommenterAlignLeft**
+    `[count]<leader>cb` **|NERDCommenterAlignBoth**
+
+    Same as **|NERDCommenterComment|** except that the delimiters are aligned down the left side (`<leader>cl`) or both sides (`<leader>cb`).
+
+  * `[count]<leader>cu` **|NERDCommenterUncomment|**
+
+    Uncomments the selected line(s).

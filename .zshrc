@@ -453,3 +453,5 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=aunpackexport PATH="/usr/local/op
 # auto_cdの拡張。2つ上、3つ上にも移動できるようにする
 alias ...='cd ../..'
 alias ....='cd ../../..'
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH="/usr/local/sbin:$PATH"

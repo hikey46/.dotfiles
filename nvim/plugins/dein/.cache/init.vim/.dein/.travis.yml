@@ -1,12 +1,12 @@
-os:
-    - linux
-    - osx
-
-sudo: false
-
-before_script:
-    - git clone https://github.com/thinca/vim-themis /tmp/vim-themis
-
-script:
-    - make
-    - /tmp/vim-themis/bin/themis
+---
+sudo: required
+services:
+    - docker
+language: generic
+env:
+    - OPTIONS=--vim-80-only
+    - OPTIONS=--vim-81-only
+    - OPTIONS=--neovim-only
+    - OPTIONS=--linters-only
+script: |
+    ./run-tests -v $OPTIONS

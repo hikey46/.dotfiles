@@ -89,11 +89,13 @@ Currently this repository contains the following themes:
     * cool
     * dark
     * dark_minimal
+    * desertink
     * deus
     * distinguished
     * dracula
     * durant
     * faryfloss
+    * fruit_punch
     * hybrid
     * hybridline
     * jay
@@ -244,7 +246,7 @@ look more like classic powerline in normal mode. To enable it: >
 <
                                                 *g:airline_solarized_dark_text*
 
-Turns the text color of the outer-most sections of the statusline to be dark. 
+Turns the text color of the outer-most sections of the statusline to be dark.
 To enable it: >
     let g:airline_solarized_dark_text = 1
 <

@@ -4,14 +4,21 @@
 # License: MIT license
 # ============================================================================
 
+import typing
+from pathlib import PurePath
+
+from denite.util import Nvim
+
+UserContext = typing.Dict[str, typing.Any]
+
 
 class Context(object):
 
-    def __init__(self, vim):
+    def __init__(self, vim: Nvim) -> None:
         self._vim = vim
-        self._context = {}
+        self._context: UserContext = {}
 
-    def get(self, user_context):
+    def get(self, user_context: UserContext) -> UserContext:
         buffer_name = user_context.get('buffer_name', 'default')
         context = self._internal_options()
         context.update(self._vim.call('denite#init#_user_options'))
@@ -33,20 +40,23 @@ class Context(object):
                 context['path'], context['root_markers']
             )
 
+        # Add buffer name to context
+        bufname = PurePath(self._vim.current.buffer.name)
+        try:
+            context['bufname'] = str(bufname.relative_to(context['path']))
+        except ValueError:
+            context['bufname'] = bufname.name
+
         # For compatibility
         for [old_option, new_option] in [
                 x for x in self._vim.call(
                     'denite#init#_deprecated_options').items()
                 if x[0] in context and x[1]]:
             context[new_option] = context[old_option]
-        if context.get('auto_highlight'):
-            context['auto_action'] = 'highlight'
-        if context.get('auto_preview'):
-            context['auto_action'] = 'preview'
 
         return context
 
-    def _internal_options(self):
+    def _internal_options(self) -> UserContext:
         return {
             'bufnr': self._vim.current.buffer.number,
             'command': '',
