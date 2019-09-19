@@ -49,6 +49,7 @@ formulas=(
     ImageMagick
     ffmpeg
     nativefier
+    mkcert
 )
 
 echo "brew tap..."
