@@ -31,6 +31,12 @@ export HISTSIZE=1000
 # 履歴ファイルに保存される履歴の件数
 export SAVEHIST=100000
 
+####################
+### SENSES開発用 ###
+####################
+
+export SENSE_API_DATABASE_NAME=sense_development
+
 #############
 ### CONST ###
 #############

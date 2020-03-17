@@ -234,7 +234,7 @@ function print_known_hosts (){
 _cache_hosts=($( print_known_hosts ))
 
 ################
-### vsc_info ###
+### vcs_info ###
 ################
 
 RPROMPT=""
