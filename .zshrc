@@ -1,9 +1,5 @@
 # Created by newuser for 5.7.1
-
-eval "$(pyenv init - zsh)"
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-eval "$(rbenv init - zsh)"
-eval "$(ndenv init - zsh)"
+eval "$(anyenv init - zsh)"
 
 #############
 ### zplug ###

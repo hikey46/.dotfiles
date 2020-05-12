@@ -28,11 +28,8 @@ formulas=(
     zplug
     tmux
     peco
-    pyenv
-    pyenv-virtualenv
-    rbenv
+    anyenv
     ruby-build
-    ndenv
     nvim
     ansible
     hub
@@ -70,13 +67,14 @@ casks=(
     google-drive-file-stream
     visual-studio-code
     rubymine
+    webstorm
     boostnote
     slack
+    discord
     iterm2
     kindle
     cyberduck
     zoomus
-    scroll-reverser
     virtualbox
     vagrant
     vagrant-manager
