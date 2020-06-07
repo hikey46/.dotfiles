@@ -80,6 +80,7 @@ casks=(
     vagrant-manager
     google-japanese-ime
     docker
+    postman
 )
 
 echo "start brew cask install apps..."
