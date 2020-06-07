@@ -81,6 +81,7 @@ casks=(
     google-japanese-ime
     docker
     postman
+    deepl
 )
 
 echo "start brew cask install apps..."
