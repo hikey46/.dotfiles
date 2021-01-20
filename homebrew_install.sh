@@ -29,11 +29,7 @@ formulas=(
     tmux
     peco
     anyenv
-    ruby-build
-    nvim
-    ansible
     hub
-    yarn
     python3
     lua
     redis
@@ -61,27 +57,28 @@ for formula in "${formulas[@]}"; do
 done
 
 casks=(
-    google-chrome
+    1password
+    alfred
     chromedriver
-    firefox
-    google-drive-file-stream
-    visual-studio-code
-    rubymine
-    webstorm
-    boostnote
-    slack
+    cyberduck
+    datagrip
+    deepl
     discord
+    docker
+    firefox
+    google-chrome
+    google-drive-file-stream
+    google-japanese-ime
     iterm2
     kindle
-    cyberduck
-    zoomus
-    virtualbox
-    vagrant
-    vagrant-manager
-    google-japanese-ime
-    docker
+    krisp
     postman
-    deepl
+    rubymine
+    slack
+    spotify
+    visual-studio-code
+    webstorm
+    zoomus
 )
 
 echo "start brew cask install apps..."

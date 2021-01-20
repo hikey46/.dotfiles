@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/hiromu_kihira/.dotfiles/nvim/plugins/repos/github.com/Shougo/dein.vim'
-let g:netrw_dirhist_2='/Users/hiromu_kihira/.dotfiles/nvim/plugins/dein/.cache/init.vim'
-let g:netrw_dirhist_3='/Users/hiromu_kihira/.dotfiles/nvim/plugins/dein/repos/github.com/cocopon/iceberg.vim'
