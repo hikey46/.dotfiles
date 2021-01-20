@@ -86,7 +86,6 @@ for cask in "${casks[@]}"; do
 done
 
 brew cleanup
-brew cask cleanup
 
 cat << END
 
