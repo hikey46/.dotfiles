@@ -67,7 +67,6 @@ casks=(
     docker
     firefox
     google-chrome
-    google-drive-file-stream
     google-japanese-ime
     iterm2
     kindle
