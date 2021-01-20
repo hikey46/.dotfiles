@@ -445,9 +445,9 @@ alias mv='mv -i'
 alias vi='nvim'
 alias cat='cat -n'
 alias less='less -NM'
-alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=aunpackexport PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=aunpack
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 # auto_cdの拡張。2つ上、3つ上にも移動できるようにする
 alias ...='cd ../..'
 alias ....='cd ../../..'
-export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH="/usr/local/sbin:$PATH"
