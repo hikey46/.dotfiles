@@ -77,7 +77,7 @@ casks=(
     spotify
     visual-studio-code
     webstorm
-    zoomus
+    zoom
 )
 
 echo "start brew cask install apps..."
