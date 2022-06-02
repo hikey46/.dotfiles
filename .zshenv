@@ -16,7 +16,7 @@ export XDG_CONFIG_HOME=$HOME/.dotfiles
 export PGDATA='/usr/local/var/postgres'
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export RAILS_ENV=development
-export ZPLUG_HOME=/usr/local/opt/zplug
+export ZPLUG_HOME=/opt/homebrew/opt/zplug
 # For compilers to find mysql@5.7 you may need to set
 export LDFLAGS="-L/usr/local/opt/mysql@5.7/lib"
 export CPPFLAGS="-I/usr/local/opt/mysql@5.7/include"

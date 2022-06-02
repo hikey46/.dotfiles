@@ -1,5 +1,5 @@
-# Created by newuser for 5.7.1
 eval "$(anyenv init - zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 #############
 ### zplug ###
@@ -32,7 +32,6 @@ zplug "zsh-users/zsh-completions"
 zplug "chrissicool/zsh-256color"
 
 zplug "peterhurford/git-aliases.zsh"
-zplug "motemen/ghq", as:command, from:gh-r
 zplug "paulirish/git-open", as:plugin
 
 zplug "supercrabtree/k"
