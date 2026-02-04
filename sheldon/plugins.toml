@@ -1,0 +1,41 @@
+# Sheldon Plugin Configuration for Zsh
+# Install plugins: sheldon lock && sheldon source
+# Location: ~/.dotfiles/sheldon/plugins.toml (via XDG_CONFIG_HOME)
+
+shell = "zsh"
+
+# Autosuggestions (Fish-like)
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+
+# Syntax Highlighting (must be loaded near the end)
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+
+# History Substring Search
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
+use = ["{{ name }}.zsh"]
+
+# Git Root Navigation
+[plugins.cd-gitroot]
+github = "mollifier/cd-gitroot"
+
+# Better File Deletion (trash bin)
+[plugins.zsh-gomi]
+github = "b4b4r07/zsh-gomi"
+use = ["bin"]
+apply = ["PATH"]
+
+# Git Aliases
+[plugins.git-aliases]
+github = "peterhurford/git-aliases.zsh"
+
+# Git Open (open repo in browser)
+[plugins.git-open]
+github = "paulirish/git-open"
+
+# Defer (for faster startup)
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"

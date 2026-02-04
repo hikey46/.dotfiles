@@ -1,14 +1,37 @@
 [user]
   name = HiromuKihira
-	email = h.kihira.9246@gmail.com
+  email = h.kihira.9246@gmail.com
 
-[color]
-  diff = auto
-  status = auto
-  branch = auto
+[core]
+  editor = nvim
+  autocrlf = input
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true    # Use n and N to move between diff sections
+  light = false      # Use dark theme
+  side-by-side = true
+  line-numbers = true
+  syntax-theme = Monokai Extended
+
+[merge]
+  conflictstyle = diff3
+  ff = false
+
+[pull]
+  ff = only
 
 [push]
-  default = simple
+  default = current
+
+[fetch]
+  prune = true
+
+[diff]
+  colorMoved = default
 
 [credential]
   helper = cache --timeout=3600
@@ -16,24 +39,24 @@
 [http]
   sslVerify = true
 
-[core]
-  editor = vim
-        autocrlf = input
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
 
 [alias]
   co = checkout
   st = status
   ci = commit
+  br = branch
   lg = log --oneline --graph --date=iso --pretty='%C(blue)%an %C(yellow)%h %Creset %C(cyan bold)%d %C(bold green)[%cd] %C(bold green)(%ar) \n\t ⇒ %Creset %s %Creset' --decorate --all --stat
-[push]
-  default = current
-
-[fetch]
-  prune = true
-
-[merge]
-        ff = false
-        ff = false
-[pull]
-        ff = only
-        ff = only
+  ll = log --oneline --graph --decorate --all
+  d = diff
+  ds = diff --staged
+  dc = diff --cached
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  amend = commit --amend --no-edit
+  undo = reset --soft HEAD^
+  wip = commit -am "WIP" --no-verify
