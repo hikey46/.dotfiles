@@ -4,6 +4,7 @@ Personal dotfiles for productive CLI environment on macOS.
 
 ## Features
 
+- **Terminal**: Ghostty with Nord theme and Hack Nerd Font
 - **Shell**: Zsh with Sheldon plugin manager
 - **Prompt**: Starship cross-shell prompt
 - **CLI Tools**: eza, bat, fzf, zoxide, fd, ripgrep, delta, btop
@@ -111,6 +112,9 @@ chsh -s $(which zsh)
 ├── .gitconfig             # Git configuration
 ├── .tmux.conf             # Tmux configuration
 ├── starship.toml          # Starship prompt configuration
+├── .config/
+│   └── ghostty/
+│       └── config         # Ghostty terminal configuration
 ├── sheldon/
 │   └── plugins.toml       # Sheldon plugins configuration
 ├── gh/                    # GitHub CLI configuration
@@ -174,6 +178,30 @@ After editing, run:
 sheldon lock
 exec $SHELL -l
 ```
+
+### Ghostty Terminal
+
+Ghostty is configured with Nord theme and Hack Nerd Font. Tab titles automatically show current directory.
+
+**Key bindings:**
+- `Cmd+T`: New tab
+- `Cmd+W`: Close tab
+- `Cmd+数字`: Switch to tab N
+- `Cmd+D`: Split horizontally
+- `Cmd+Shift+D`: Split vertically
+- `Opt+h/j/k/l`: Navigate splits (Vim-style)
+- `Opt+Shift+h/j/k/l`: Create splits (Vim-style)
+
+**Prompt color customization:**
+```bash
+# Change prompt colors per project
+pc red      # Set red colors
+pc green    # Set green colors
+pc blue     # Set blue colors
+pc default  # Reset to default
+```
+
+See [ONBOARDING.md](./ONBOARDING.md#ghostty---terminal-emulator) for detailed guide.
 
 ## CLI Tools Guide
 

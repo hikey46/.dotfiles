@@ -13,6 +13,12 @@ brew "starship"         # Cross-shell prompt
 brew "sheldon"          # Fast plugin manager for Zsh
 brew "direnv"           # Environment switcher
 
+# Terminal Emulator
+cask "ghostty"          # Modern GPU-accelerated terminal
+
+# Fonts
+cask "font-hack-nerd-font"  # Nerd Font with icons for terminal
+
 # Modern CLI Tools (Replacements)
 brew "eza"              # Modern ls replacement (written in Rust)
 brew "bat"              # Cat with syntax highlighting

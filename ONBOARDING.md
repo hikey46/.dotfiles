@@ -4,6 +4,7 @@ Comprehensive guide to the CLI tools installed in this environment.
 
 ## Table of Contents
 
+0. [Ghostty - Terminal Emulator](#ghostty---terminal-emulator)
 1. [eza - Enhanced Directory Listing](#eza---enhanced-directory-listing)
 2. [bat - Syntax-Highlighted File Viewer](#bat---syntax-highlighted-file-viewer)
 3. [fzf - Fuzzy Finder](#fzf---fuzzy-finder)
@@ -15,6 +16,216 @@ Comprehensive guide to the CLI tools installed in this environment.
 9. [ghq - Repository Manager](#ghq---repository-manager)
 10. [jq - JSON Processor](#jq---json-processor)
 11. [Workflow Examples](#workflow-examples)
+
+---
+
+## Ghostty - Terminal Emulator
+
+Modern, GPU-accelerated terminal emulator configured for multi-agent development workflows.
+
+### Configuration
+
+- **Theme**: Nord (dark blue color scheme)
+- **Font**: Hack Nerd Font 13pt
+- **Tab Bar**: Always visible with directory-based titles
+- **Shell Integration**: Automatic tab title updates
+
+### Tab Management
+
+```bash
+# Create new tab
+Cmd+T
+
+# Close tab
+Cmd+W
+
+# Switch tabs
+Cmd+1 through Cmd+9
+
+# Next/previous tab
+Cmd+Shift+]  # Next
+Cmd+Shift+[  # Previous
+```
+
+### Split Panes
+
+**Default shortcuts:**
+```bash
+# Create splits
+Cmd+D              # Horizontal split
+Cmd+Shift+D        # Vertical split
+```
+
+**Vim-style shortcuts (custom):**
+```bash
+# Navigate splits
+Opt+h              # Move to left split
+Opt+j              # Move to bottom split
+Opt+k              # Move to top split
+Opt+l              # Move to right split
+
+# Create splits
+Opt+Shift+h        # New split on left
+Opt+Shift+j        # New split below
+Opt+Shift+k        # New split above
+Opt+Shift+l        # New split on right
+```
+
+### Project Color Identification
+
+Since tabs cannot have different background colors, use prompt colors to identify projects:
+
+```bash
+# Set prompt colors for current tab
+pc red             # Project A (red theme)
+pc green           # Project B (green theme)
+pc blue            # Project C (blue theme)
+pc yellow          # Project D (yellow theme)
+pc magenta         # Project E (magenta theme)
+pc cyan            # Project F (cyan theme)
+pc default         # Reset to default (cyan/purple)
+```
+
+**Usage pattern:**
+```bash
+# Tab 1: Project A
+cd ~/Projects/project-a
+pc red
+# Now directory and git branch show in red
+
+# Tab 2: Project B (new tab with Cmd+T)
+cd ~/Projects/project-b
+pc green
+# Now directory and git branch show in green
+```
+
+### Tab Titles
+
+Tab titles automatically update to show current directory thanks to shell integration:
+
+- Short directory name when in deep paths
+- Full path expansion with `~` notation
+- Updates on `cd` command automatically
+
+### Multi-Agent Workflows
+
+**Scenario 1: Multiple projects in tabs**
+```bash
+# Tab 1: Frontend project
+cd ~/Projects/frontend
+pc blue
+# Run Claude Code agent for frontend
+
+# Tab 2: Backend project
+cd ~/Projects/backend
+pc green
+# Run Claude Code agent for backend
+
+# Tab 3: Database work
+cd ~/Projects/database
+pc red
+# Run queries, migrations
+```
+
+**Scenario 2: Same project, multiple agents in splits**
+```bash
+# Main pane
+cd ~/Projects/myapp
+pc yellow
+# Run main development agent
+
+# Split pane (Cmd+D)
+# Run testing agent in same directory
+npm test --watch
+
+# Another split (Opt+Shift+l)
+# Run build watcher
+npm run dev
+```
+
+### Configuration File
+
+Location: `~/.config/ghostty/config` (symlinked from `~/.dotfiles/.config/ghostty/config`)
+
+Edit configuration:
+```bash
+nvim ~/.config/ghostty/config
+```
+
+After editing, reload:
+```bash
+# Cmd+Shift+, (in Ghostty)
+# Or restart Ghostty
+```
+
+### Customization Options
+
+**Change opacity:**
+```
+background-opacity = 0.95  # 95% opacity (5% transparent)
+background-blur = 20       # Blur background
+```
+
+**Change tab position:**
+```
+tab-bar-position = top     # or bottom
+```
+
+**Disable splits:**
+```
+# Remove keybind lines for splits if not needed
+```
+
+**Change font size:**
+```
+font-size = 14  # Increase to 14pt
+```
+
+### Integration with Starship
+
+Ghostty works seamlessly with Starship prompt (already configured in `~/.dotfiles/starship.toml`):
+
+- Directory shown with icons and colors
+- Git branch with status indicators
+- Command duration for long-running commands
+- Language version detection (Node, Python, Ruby, etc.)
+
+The `pc` command modifies Starship colors via environment variables.
+
+### Troubleshooting
+
+**Tab titles not updating:**
+```bash
+# Check shell integration
+echo $GHOSTTY_SHELL_INTEGRATION
+
+# Should output: 1
+# If empty, shell integration is not active
+```
+
+**Font not rendering correctly:**
+```bash
+# Verify Hack Nerd Font is installed
+fc-list | grep -i "hack nerd"
+
+# Should show multiple font files
+# If empty, install via Homebrew:
+brew install font-hack-nerd-font
+```
+
+**Colors look wrong:**
+```bash
+# Check theme setting
+cat ~/.config/ghostty/config | grep theme
+
+# Should show: theme = dark:Nord,light:Nord Light
+```
+
+### Documentation
+
+- [Ghostty Official Docs](https://ghostty.org/docs)
+- [Configuration Reference](https://ghostty.org/docs/config/reference)
+- [Keybindings](https://ghostty.org/docs/config/keybind)
 
 ---
 

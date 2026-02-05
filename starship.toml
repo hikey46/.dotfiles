@@ -52,7 +52,7 @@ disabled = false
 truncation_length = 3
 truncate_to_repo = true
 format = "in [$path]($style)[$read_only]($read_only_style) "
-style = "bold cyan"
+style = "${STARSHIP_COLOR_DIRECTORY:-bold cyan}"
 read_only = " 🔒"
 truncation_symbol = "…/"
 
@@ -66,7 +66,7 @@ truncation_symbol = "…/"
 [git_branch]
 symbol = " "
 format = "on [$symbol$branch(:$remote_branch)]($style) "
-style = "bold purple"
+style = "${STARSHIP_COLOR_GIT_BRANCH:-bold purple}"
 truncation_length = 30
 truncation_symbol = "…"
 

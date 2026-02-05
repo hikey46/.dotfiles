@@ -144,7 +144,22 @@ else
     echo "Warning: Starship not installed"
 fi
 
-# 10. Setup anyenv
+# 10. Setup Ghostty config
+print_step "Setting up Ghostty"
+if command_exists ghostty; then
+    mkdir -p "$HOME/.config/ghostty"
+
+    # Create symlink for ghostty config
+    if [ -f "$DOTFILES_DIR/.config/ghostty/config" ]; then
+        echo "Creating symlink: ~/.config/ghostty/config -> $DOTFILES_DIR/.config/ghostty/config"
+        ln -sf "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
+    fi
+    echo "✓ Ghostty configured"
+else
+    echo "Warning: Ghostty not installed"
+fi
+
+# 11. Setup anyenv
 print_step "Setting up anyenv"
 if command_exists anyenv; then
     # Initialize anyenv
@@ -164,7 +179,7 @@ else
     echo "Warning: anyenv not installed"
 fi
 
-# 11. Setup Zsh as default shell
+# 12. Setup Zsh as default shell
 print_step "Setting Zsh as default shell"
 if [ "$SHELL" != "$(which zsh)" ]; then
     echo "Changing default shell to Zsh..."
@@ -174,7 +189,7 @@ else
     echo "✓ Zsh is already the default shell"
 fi
 
-# 12. Setup Neovim
+# 13. Setup Neovim
 print_step "Setting up Neovim"
 if command_exists nvim; then
     echo "✓ Neovim installed"
@@ -183,7 +198,7 @@ else
     echo "Warning: Neovim not installed"
 fi
 
-# 13. Final message
+# 14. Final message
 echo ""
 echo "=================================================="
 echo "  Setup Complete!"

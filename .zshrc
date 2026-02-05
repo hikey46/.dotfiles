@@ -20,7 +20,8 @@ if type brew &>/dev/null; then
 fi
 
 # Initialize completion system before loading plugins
-autoload -Uz compinit && compinit
+# -i flag: ignore insecure directories without prompting
+autoload -Uz compinit && compinit -i
 
 ################
 ### Sheldon ####
@@ -371,6 +372,56 @@ function extract() {
         echo "'$1' is not a valid file"
     fi
 }
+
+##########################
+### Ghostty + Starship ###
+##########################
+
+# Set project-specific prompt colors for visual identification
+function set_prompt_color() {
+    local color="${1:-default}"
+
+    case "$color" in
+        red)
+            export STARSHIP_COLOR_DIRECTORY="bold red"
+            export STARSHIP_COLOR_GIT_BRANCH="bold bright-red"
+            ;;
+        green)
+            export STARSHIP_COLOR_DIRECTORY="bold green"
+            export STARSHIP_COLOR_GIT_BRANCH="bold bright-green"
+            ;;
+        yellow)
+            export STARSHIP_COLOR_DIRECTORY="bold yellow"
+            export STARSHIP_COLOR_GIT_BRANCH="bold bright-yellow"
+            ;;
+        blue)
+            export STARSHIP_COLOR_DIRECTORY="bold blue"
+            export STARSHIP_COLOR_GIT_BRANCH="bold bright-blue"
+            ;;
+        magenta)
+            export STARSHIP_COLOR_DIRECTORY="bold magenta"
+            export STARSHIP_COLOR_GIT_BRANCH="bold bright-magenta"
+            ;;
+        cyan)
+            export STARSHIP_COLOR_DIRECTORY="bold cyan"
+            export STARSHIP_COLOR_GIT_BRANCH="bold bright-cyan"
+            ;;
+        default)
+            unset STARSHIP_COLOR_DIRECTORY
+            unset STARSHIP_COLOR_GIT_BRANCH
+            ;;
+        *)
+            echo "Usage: set_prompt_color {red|green|yellow|blue|magenta|cyan|default}"
+            return 1
+            ;;
+    esac
+
+    # Reload Starship to apply changes
+    eval "$(starship init zsh)"
+}
+
+# Alias for quick color switching
+alias pc='set_prompt_color'
 
 #################
 ### Local Config ###

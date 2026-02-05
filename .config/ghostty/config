@@ -1,0 +1,48 @@
+# Ghostty Terminal Configuration
+# Modern terminal emulator optimized for multi-agent development workflows
+# Docs: https://ghostty.org/docs/config/reference
+
+# === Core Settings ===
+shell-integration = auto
+shell-integration-features = cursor,sudo,title
+
+# === Theme & Colors ===
+theme = dark:Nord,light:Nord Light
+
+# === Font ===
+font-family = Hack Nerd Font Mono
+font-size = 13
+font-feature = -calt
+
+# === Window ===
+window-theme = ghostty
+window-decoration = auto
+window-padding-x = 8
+window-padding-y = 8
+background-opacity = 0.95
+background-blur = 20
+
+# === Tab Bar ===
+tab-bar = always
+tab-bar-position = top
+tab-bar-style = native
+
+# === Tab Title: Show directory with ~ notation ===
+title-command = direct:/usr/bin/zsh -c 'print -P "%~"'
+
+# === Keybindings (Vim style for splits) ===
+# Navigate splits
+keybind = opt+h=goto_split:left
+keybind = opt+j=goto_split:bottom
+keybind = opt+k=goto_split:top
+keybind = opt+l=goto_split:right
+
+# Create splits
+keybind = opt+shift+h=new_split:left
+keybind = opt+shift+j=new_split:down
+keybind = opt+shift+k=new_split:up
+keybind = opt+shift+l=new_split:right
+
+# === Modular Config ===
+# Optional local overrides (file may not exist)
+config-file = ?local.config
