@@ -401,7 +401,7 @@ Interactive fuzzy finder for files, command history, and more.
 
 - `Ctrl+T`: Find files in current directory
 - `Ctrl+R`: Search command history
-- `Alt+C`: Find and cd to directory
+- `Opt+C`: Find and cd to directory
 
 ### Basic Usage
 
@@ -439,7 +439,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 # Use fd for Ctrl+T
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# Use fd for Alt+C
+# Use fd for Opt+C
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 ```
 

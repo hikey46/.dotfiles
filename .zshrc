@@ -380,35 +380,38 @@ function extract() {
 # Set project-specific prompt colors for visual identification
 function set_prompt_color() {
     local color="${1:-default}"
+    local dir_color
+    local branch_color
+    local config_file="$HOME/.dotfiles/starship.toml"
 
     case "$color" in
         red)
-            export STARSHIP_COLOR_DIRECTORY="bold red"
-            export STARSHIP_COLOR_GIT_BRANCH="bold bright-red"
+            dir_color="bold bright-red"
+            branch_color="bold bright-red"
             ;;
         green)
-            export STARSHIP_COLOR_DIRECTORY="bold green"
-            export STARSHIP_COLOR_GIT_BRANCH="bold bright-green"
+            dir_color="bold bright-green"
+            branch_color="bold bright-green"
             ;;
         yellow)
-            export STARSHIP_COLOR_DIRECTORY="bold yellow"
-            export STARSHIP_COLOR_GIT_BRANCH="bold bright-yellow"
+            dir_color="bold bright-yellow"
+            branch_color="bold bright-yellow"
             ;;
         blue)
-            export STARSHIP_COLOR_DIRECTORY="bold blue"
-            export STARSHIP_COLOR_GIT_BRANCH="bold bright-blue"
+            dir_color="bold bright-blue"
+            branch_color="bold bright-blue"
             ;;
         magenta)
-            export STARSHIP_COLOR_DIRECTORY="bold magenta"
-            export STARSHIP_COLOR_GIT_BRANCH="bold bright-magenta"
+            dir_color="bold bright-magenta"
+            branch_color="bold bright-magenta"
             ;;
         cyan)
-            export STARSHIP_COLOR_DIRECTORY="bold cyan"
-            export STARSHIP_COLOR_GIT_BRANCH="bold bright-cyan"
+            dir_color="bold bright-cyan"
+            branch_color="bold bright-cyan"
             ;;
         default)
-            unset STARSHIP_COLOR_DIRECTORY
-            unset STARSHIP_COLOR_GIT_BRANCH
+            dir_color="bold bright-cyan"
+            branch_color="bold bright-purple"
             ;;
         *)
             echo "Usage: set_prompt_color {red|green|yellow|blue|magenta|cyan|default}"
@@ -416,8 +419,16 @@ function set_prompt_color() {
             ;;
     esac
 
-    # Reload Starship to apply changes
-    eval "$(starship init zsh)"
+    # Update starship.toml with sed
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS sed requires -i ''
+        sed -i '' "s/^style = \"bold [a-z-]*\" # DIRECTORY_COLOR/style = \"$dir_color\" # DIRECTORY_COLOR/" "$config_file"
+        sed -i '' "s/^style = \"bold [a-z-]*\" # GIT_BRANCH_COLOR/style = \"$branch_color\" # GIT_BRANCH_COLOR/" "$config_file"
+    else
+        # Linux sed
+        sed -i "s/^style = \"bold [a-z-]*\" # DIRECTORY_COLOR/style = \"$dir_color\" # DIRECTORY_COLOR/" "$config_file"
+        sed -i "s/^style = \"bold [a-z-]*\" # GIT_BRANCH_COLOR/style = \"$branch_color\" # GIT_BRANCH_COLOR/" "$config_file"
+    fi
 }
 
 # Alias for quick color switching

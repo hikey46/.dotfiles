@@ -146,7 +146,7 @@ fi
 
 # 10. Setup Ghostty config
 print_step "Setting up Ghostty"
-if command_exists ghostty; then
+if [ -d "/Applications/Ghostty.app" ]; then
     mkdir -p "$HOME/.config/ghostty"
 
     # Create symlink for ghostty config

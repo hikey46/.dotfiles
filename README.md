@@ -216,7 +216,7 @@ For detailed guide on using the installed CLI tools, see [ONBOARDING.md](./ONBOA
 - `grep` → `rg`: Extremely fast text search
 - `Ctrl+R`: fzf history search
 - `Ctrl+T`: fzf file finder
-- `Alt+C`: fzf directory navigation
+- `Opt+C`: fzf directory navigation
 
 ## Key Bindings
 
@@ -224,7 +224,7 @@ For detailed guide on using the installed CLI tools, see [ONBOARDING.md](./ONBOA
 
 - `Ctrl+R`: Fuzzy command history search (fzf)
 - `Ctrl+T`: Fuzzy file search (fzf)
-- `Alt+C`: Fuzzy directory search (fzf)
+- `Opt+C`: Fuzzy directory search (fzf)
 - `Ctrl+P`: Previous command in history (matching prefix)
 - `Ctrl+N`: Next command in history (matching prefix)
 - `Ctrl+W`: Delete word backward (by path segment)

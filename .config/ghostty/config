@@ -3,7 +3,7 @@
 # Docs: https://ghostty.org/docs/config/reference
 
 # === Core Settings ===
-shell-integration = auto
+shell-integration = detect
 shell-integration-features = cursor,sudo,title
 
 # === Theme & Colors ===
@@ -19,22 +19,17 @@ window-theme = ghostty
 window-decoration = auto
 window-padding-x = 8
 window-padding-y = 8
-background-opacity = 0.95
-background-blur = 20
+background-opacity = 1.0
+background = #0d0d0d
 
 # === Tab Bar ===
-tab-bar = always
-tab-bar-position = top
-tab-bar-style = native
-
-# === Tab Title: Show directory with ~ notation ===
-title-command = direct:/usr/bin/zsh -c 'print -P "%~"'
+window-show-tab-bar = always
 
 # === Keybindings (Vim style for splits) ===
 # Navigate splits
 keybind = opt+h=goto_split:left
-keybind = opt+j=goto_split:bottom
-keybind = opt+k=goto_split:top
+keybind = opt+j=goto_split:down
+keybind = opt+k=goto_split:up
 keybind = opt+l=goto_split:right
 
 # Create splits
@@ -42,6 +37,9 @@ keybind = opt+shift+h=new_split:left
 keybind = opt+shift+j=new_split:down
 keybind = opt+shift+k=new_split:up
 keybind = opt+shift+l=new_split:right
+
+# Split down with Cmd+Shift+D
+keybind = super+shift+d=new_split:down
 
 # === Modular Config ===
 # Optional local overrides (file may not exist)
