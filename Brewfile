@@ -4,6 +4,7 @@
 # Taps
 tap "homebrew/bundle"
 tap "homebrew/services"
+tap "hashicorp/tap"
 
 # Shell & Terminal
 brew "zsh"              # Modern shell
@@ -73,3 +74,6 @@ brew "lua"
 
 # Other Utilities
 brew "colordiff"        # Colorized diff
+
+# Infrastructure as Code
+brew "hashicorp/tap/terraform"
