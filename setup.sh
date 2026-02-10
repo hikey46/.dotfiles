@@ -133,6 +133,7 @@ fi
 print_step "Setting up Starship"
 if command_exists starship; then
     mkdir -p "$HOME/.config"
+    cp "$DOTFILES_DIR/starship.toml.template" "$DOTFILES_DIR/starship.toml"
 
     # Create symlink for starship.toml
     if [ -f "$DOTFILES_DIR/starship.toml" ]; then
